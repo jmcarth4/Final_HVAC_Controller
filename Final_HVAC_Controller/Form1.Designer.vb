@@ -76,9 +76,10 @@ Partial Class HVACControllerForm
         Me.Label19 = New System.Windows.Forms.Label()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.Label1 = New System.Windows.Forms.Label()
+        Me.label1 = New System.Windows.Forms.Label()
         Me.LoadButton = New System.Windows.Forms.Button()
         Me.ConnectButton = New System.Windows.Forms.Button()
+        Me.AnIn1CheckBox = New System.Windows.Forms.CheckBox()
         Me.SerialSettingsMenuStrip.SuspendLayout()
         Me.ThermostatGroupBox.SuspendLayout()
         Me.TestGroupBox.SuspendLayout()
@@ -107,7 +108,7 @@ Partial Class HVACControllerForm
         '
         Me.SetSerialSettingsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SelectSerialPortToolStripMenuItem, Me.SelectBaudRateToolStripMenuItem})
         Me.SetSerialSettingsToolStripMenuItem.Name = "SetSerialSettingsToolStripMenuItem"
-        Me.SetSerialSettingsToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
+        Me.SetSerialSettingsToolStripMenuItem.Size = New System.Drawing.Size(255, 34)
         Me.SetSerialSettingsToolStripMenuItem.Text = "Set Serial Settings"
         '
         'SelectSerialPortToolStripMenuItem
@@ -139,13 +140,13 @@ Partial Class HVACControllerForm
         'SaveSettingsToolStripMenuItem
         '
         Me.SaveSettingsToolStripMenuItem.Name = "SaveSettingsToolStripMenuItem"
-        Me.SaveSettingsToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
+        Me.SaveSettingsToolStripMenuItem.Size = New System.Drawing.Size(255, 34)
         Me.SaveSettingsToolStripMenuItem.Text = "Save Settings"
         '
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(255, 34)
         Me.ExitToolStripMenuItem.Text = "Exit "
         '
         'ThermostatGroupBox
@@ -335,6 +336,7 @@ Partial Class HVACControllerForm
         '
         'TestGroupBox
         '
+        Me.TestGroupBox.Controls.Add(Me.AnIn1CheckBox)
         Me.TestGroupBox.Controls.Add(Me.BaudRateLabel)
         Me.TestGroupBox.Controls.Add(Me.DigOut1Label)
         Me.TestGroupBox.Controls.Add(Me.DigOut2Label)
@@ -482,6 +484,13 @@ Partial Class HVACControllerForm
         Me.DigIn4Label.TabIndex = 25
         Me.DigIn4Label.Text = "Digital In 4"
         '
+        'SerialPort1
+        '
+        '
+        'Timer1
+        '
+        Me.Timer1.Enabled = True
+        '
         'Timer2
         '
         Me.Timer2.Enabled = True
@@ -535,7 +544,7 @@ Partial Class HVACControllerForm
         'GroupBox1
         '
         Me.GroupBox1.Controls.Add(Me.Label2)
-        Me.GroupBox1.Controls.Add(Me.Label1)
+        Me.GroupBox1.Controls.Add(Me.label1)
         Me.GroupBox1.Controls.Add(Me.Label19)
         Me.GroupBox1.Controls.Add(Me.Label18)
         Me.GroupBox1.Controls.Add(Me.Label17)
@@ -557,14 +566,13 @@ Partial Class HVACControllerForm
         Me.Label2.TabIndex = 26
         Me.Label2.Text = "Label2"
         '
-        'Label1
+        'label1
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(42, 22)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(57, 20)
-        Me.Label1.TabIndex = 25
-        Me.Label1.Text = "Label1"
+        Me.label1.AutoSize = True
+        Me.label1.Location = New System.Drawing.Point(42, 22)
+        Me.label1.Name = "label1"
+        Me.label1.Size = New System.Drawing.Size(0, 20)
+        Me.label1.TabIndex = 25
         '
         'LoadButton
         '
@@ -583,6 +591,16 @@ Partial Class HVACControllerForm
         Me.ConnectButton.TabIndex = 36
         Me.ConnectButton.Text = "Connect"
         Me.ConnectButton.UseVisualStyleBackColor = True
+        '
+        'AnIn1CheckBox
+        '
+        Me.AnIn1CheckBox.AutoSize = True
+        Me.AnIn1CheckBox.Location = New System.Drawing.Point(254, 127)
+        Me.AnIn1CheckBox.Name = "AnIn1CheckBox"
+        Me.AnIn1CheckBox.Size = New System.Drawing.Size(82, 24)
+        Me.AnIn1CheckBox.TabIndex = 22
+        Me.AnIn1CheckBox.Text = "AnIn1 "
+        Me.AnIn1CheckBox.UseVisualStyleBackColor = True
         '
         'HVACControllerForm
         '
@@ -659,11 +677,12 @@ Partial Class HVACControllerForm
     Friend WithEvents DigOut3Label As Label
     Friend WithEvents DigOutLabel As Label
     Friend WithEvents Label2 As Label
-    Friend WithEvents Label1 As Label
+    Friend WithEvents label1 As Label
     Friend WithEvents SerialPortComboBox As ToolStripComboBox
     Friend WithEvents BaudRateComboBox As ToolStripComboBox
     Friend WithEvents BaudRateLabel As Label
     Friend WithEvents ComPortLabel As Label
     Friend WithEvents LoadButton As Button
     Friend WithEvents ConnectButton As Button
+    Friend WithEvents AnIn1CheckBox As CheckBox
 End Class
