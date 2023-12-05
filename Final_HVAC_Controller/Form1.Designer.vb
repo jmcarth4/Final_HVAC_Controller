@@ -27,7 +27,9 @@ Partial Class HVACControllerForm
         Me.SetSettingsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SetSerialSettingsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SelectSerialPortToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SerialPortComboBox = New System.Windows.Forms.ToolStripComboBox()
         Me.SelectBaudRateToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BaudRateComboBox = New System.Windows.Forms.ToolStripComboBox()
         Me.SaveSettingsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ThermostatGroupBox = New System.Windows.Forms.GroupBox()
@@ -50,8 +52,10 @@ Partial Class HVACControllerForm
         Me.FanStatusLabel = New System.Windows.Forms.Label()
         Me.PressureStatusLabel = New System.Windows.Forms.Label()
         Me.TestGroupBox = New System.Windows.Forms.GroupBox()
+        Me.BaudRateLabel = New System.Windows.Forms.Label()
         Me.DigOut1Label = New System.Windows.Forms.Label()
         Me.DigOut2Label = New System.Windows.Forms.Label()
+        Me.ComPortLabel = New System.Windows.Forms.Label()
         Me.DigOut3Label = New System.Windows.Forms.Label()
         Me.DigOutLabel = New System.Windows.Forms.Label()
         Me.TXLabel = New System.Windows.Forms.Label()
@@ -65,16 +69,16 @@ Partial Class HVACControllerForm
         Me.SerialPort1 = New System.IO.Ports.SerialPort(Me.components)
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.Timer2 = New System.Windows.Forms.Timer(Me.components)
-        Me.BaudRateComboBox = New System.Windows.Forms.ComboBox()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.Label18 = New System.Windows.Forms.Label()
         Me.Label19 = New System.Windows.Forms.Label()
-        Me.SerialPortComboBox = New System.Windows.Forms.ComboBox()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.LoadButton = New System.Windows.Forms.Button()
+        Me.ConnectButton = New System.Windows.Forms.Button()
         Me.SerialSettingsMenuStrip.SuspendLayout()
         Me.ThermostatGroupBox.SuspendLayout()
         Me.TestGroupBox.SuspendLayout()
@@ -96,38 +100,52 @@ Partial Class HVACControllerForm
         '
         Me.SetSettingsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SetSerialSettingsToolStripMenuItem, Me.SaveSettingsToolStripMenuItem, Me.ExitToolStripMenuItem})
         Me.SetSettingsToolStripMenuItem.Name = "SetSettingsToolStripMenuItem"
-        Me.SetSettingsToolStripMenuItem.Size = New System.Drawing.Size(142, 29)
-        Me.SetSettingsToolStripMenuItem.Text = "Settings Menu"
+        Me.SetSettingsToolStripMenuItem.Size = New System.Drawing.Size(92, 29)
+        Me.SetSettingsToolStripMenuItem.Text = "Settings"
         '
         'SetSerialSettingsToolStripMenuItem
         '
         Me.SetSerialSettingsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SelectSerialPortToolStripMenuItem, Me.SelectBaudRateToolStripMenuItem})
         Me.SetSerialSettingsToolStripMenuItem.Name = "SetSerialSettingsToolStripMenuItem"
-        Me.SetSerialSettingsToolStripMenuItem.Size = New System.Drawing.Size(255, 34)
+        Me.SetSerialSettingsToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
         Me.SetSerialSettingsToolStripMenuItem.Text = "Set Serial Settings"
         '
         'SelectSerialPortToolStripMenuItem
         '
+        Me.SelectSerialPortToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SerialPortComboBox})
         Me.SelectSerialPortToolStripMenuItem.Name = "SelectSerialPortToolStripMenuItem"
         Me.SelectSerialPortToolStripMenuItem.Size = New System.Drawing.Size(245, 34)
         Me.SelectSerialPortToolStripMenuItem.Text = "Select Serial Port"
         '
+        'SerialPortComboBox
+        '
+        Me.SerialPortComboBox.Name = "SerialPortComboBox"
+        Me.SerialPortComboBox.Size = New System.Drawing.Size(121, 33)
+        Me.SerialPortComboBox.Text = "Serial Port"
+        '
         'SelectBaudRateToolStripMenuItem
         '
+        Me.SelectBaudRateToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BaudRateComboBox})
         Me.SelectBaudRateToolStripMenuItem.Name = "SelectBaudRateToolStripMenuItem"
         Me.SelectBaudRateToolStripMenuItem.Size = New System.Drawing.Size(245, 34)
         Me.SelectBaudRateToolStripMenuItem.Text = "Select Baud Rate"
         '
+        'BaudRateComboBox
+        '
+        Me.BaudRateComboBox.Name = "BaudRateComboBox"
+        Me.BaudRateComboBox.Size = New System.Drawing.Size(121, 33)
+        Me.BaudRateComboBox.Text = "Baud Rate"
+        '
         'SaveSettingsToolStripMenuItem
         '
         Me.SaveSettingsToolStripMenuItem.Name = "SaveSettingsToolStripMenuItem"
-        Me.SaveSettingsToolStripMenuItem.Size = New System.Drawing.Size(255, 34)
+        Me.SaveSettingsToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
         Me.SaveSettingsToolStripMenuItem.Text = "Save Settings"
         '
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(255, 34)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
         Me.ExitToolStripMenuItem.Text = "Exit "
         '
         'ThermostatGroupBox
@@ -317,8 +335,10 @@ Partial Class HVACControllerForm
         '
         'TestGroupBox
         '
+        Me.TestGroupBox.Controls.Add(Me.BaudRateLabel)
         Me.TestGroupBox.Controls.Add(Me.DigOut1Label)
         Me.TestGroupBox.Controls.Add(Me.DigOut2Label)
+        Me.TestGroupBox.Controls.Add(Me.ComPortLabel)
         Me.TestGroupBox.Controls.Add(Me.DigOut3Label)
         Me.TestGroupBox.Controls.Add(Me.DigOutLabel)
         Me.TestGroupBox.Controls.Add(Me.TXLabel)
@@ -335,6 +355,15 @@ Partial Class HVACControllerForm
         Me.TestGroupBox.TabIndex = 3
         Me.TestGroupBox.TabStop = False
         Me.TestGroupBox.Text = "Testing GroupBox"
+        '
+        'BaudRateLabel
+        '
+        Me.BaudRateLabel.AutoSize = True
+        Me.BaudRateLabel.Location = New System.Drawing.Point(124, 25)
+        Me.BaudRateLabel.Name = "BaudRateLabel"
+        Me.BaudRateLabel.Size = New System.Drawing.Size(86, 20)
+        Me.BaudRateLabel.TabIndex = 27
+        Me.BaudRateLabel.Text = "Baud Rate"
         '
         'DigOut1Label
         '
@@ -353,6 +382,15 @@ Partial Class HVACControllerForm
         Me.DigOut2Label.Size = New System.Drawing.Size(96, 20)
         Me.DigOut2Label.TabIndex = 35
         Me.DigOut2Label.Text = "Digital Out 2"
+        '
+        'ComPortLabel
+        '
+        Me.ComPortLabel.AutoSize = True
+        Me.ComPortLabel.Location = New System.Drawing.Point(10, 25)
+        Me.ComPortLabel.Name = "ComPortLabel"
+        Me.ComPortLabel.Size = New System.Drawing.Size(82, 20)
+        Me.ComPortLabel.TabIndex = 28
+        Me.ComPortLabel.Text = "Serial Port"
         '
         'DigOut3Label
         '
@@ -449,15 +487,6 @@ Partial Class HVACControllerForm
         Me.Timer2.Enabled = True
         Me.Timer2.Interval = 1
         '
-        'BaudRateComboBox
-        '
-        Me.BaudRateComboBox.FormattingEnabled = True
-        Me.BaudRateComboBox.Location = New System.Drawing.Point(915, 277)
-        Me.BaudRateComboBox.Name = "BaudRateComboBox"
-        Me.BaudRateComboBox.Size = New System.Drawing.Size(121, 28)
-        Me.BaudRateComboBox.TabIndex = 5
-        Me.BaudRateComboBox.Text = "Baud Rate"
-        '
         'Label15
         '
         Me.Label15.AutoSize = True
@@ -503,15 +532,6 @@ Partial Class HVACControllerForm
         Me.Label19.TabIndex = 24
         Me.Label19.Text = "Label19"
         '
-        'SerialPortComboBox
-        '
-        Me.SerialPortComboBox.FormattingEnabled = True
-        Me.SerialPortComboBox.Location = New System.Drawing.Point(885, 227)
-        Me.SerialPortComboBox.Name = "SerialPortComboBox"
-        Me.SerialPortComboBox.Size = New System.Drawing.Size(121, 28)
-        Me.SerialPortComboBox.TabIndex = 34
-        Me.SerialPortComboBox.Text = "Serial Port"
-        '
         'GroupBox1
         '
         Me.GroupBox1.Controls.Add(Me.Label2)
@@ -523,19 +543,10 @@ Partial Class HVACControllerForm
         Me.GroupBox1.Controls.Add(Me.Label16)
         Me.GroupBox1.Location = New System.Drawing.Point(809, 336)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(253, 179)
+        Me.GroupBox1.Size = New System.Drawing.Size(265, 240)
         Me.GroupBox1.TabIndex = 35
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "GroupBox1"
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(42, 22)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(57, 20)
-        Me.Label1.TabIndex = 25
-        Me.Label1.Text = "Label1"
         '
         'Label2
         '
@@ -546,17 +557,44 @@ Partial Class HVACControllerForm
         Me.Label2.TabIndex = 26
         Me.Label2.Text = "Label2"
         '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(42, 22)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(57, 20)
+        Me.Label1.TabIndex = 25
+        Me.Label1.Text = "Label1"
+        '
+        'LoadButton
+        '
+        Me.LoadButton.Location = New System.Drawing.Point(26, 546)
+        Me.LoadButton.Name = "LoadButton"
+        Me.LoadButton.Size = New System.Drawing.Size(151, 30)
+        Me.LoadButton.TabIndex = 22
+        Me.LoadButton.Text = "Load"
+        Me.LoadButton.UseVisualStyleBackColor = True
+        '
+        'ConnectButton
+        '
+        Me.ConnectButton.Location = New System.Drawing.Point(203, 546)
+        Me.ConnectButton.Name = "ConnectButton"
+        Me.ConnectButton.Size = New System.Drawing.Size(151, 30)
+        Me.ConnectButton.TabIndex = 36
+        Me.ConnectButton.Text = "Connect"
+        Me.ConnectButton.UseVisualStyleBackColor = True
+        '
         'HVACControllerForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1074, 618)
-        Me.Controls.Add(Me.SerialPortComboBox)
+        Me.Controls.Add(Me.ConnectButton)
+        Me.Controls.Add(Me.LoadButton)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.TestGroupBox)
         Me.Controls.Add(Me.ThermostatGroupBox)
         Me.Controls.Add(Me.SerialSettingsMenuStrip)
-        Me.Controls.Add(Me.BaudRateComboBox)
         Me.MainMenuStrip = Me.SerialSettingsMenuStrip
         Me.Name = "HVACControllerForm"
         Me.Text = "HVAC Controller"
@@ -582,7 +620,6 @@ Partial Class HVACControllerForm
     Friend WithEvents ColdSetTempTextBox As TextBox
     Friend WithEvents TempDownButton As Button
     Friend WithEvents TempUpButton As Button
-    Friend WithEvents BaudRateComboBox As ComboBox
     Friend WithEvents DayLabel As Label
     Friend WithEvents TimeLabel As Label
     Friend WithEvents HeatSetTempLabel As Label
@@ -616,7 +653,6 @@ Partial Class HVACControllerForm
     Friend WithEvents SelectBaudRateToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SaveSettingsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ExitToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents SerialPortComboBox As ComboBox
     Friend WithEvents GroupBox1 As GroupBox
     Friend WithEvents DigOut1Label As Label
     Friend WithEvents DigOut2Label As Label
@@ -624,4 +660,10 @@ Partial Class HVACControllerForm
     Friend WithEvents DigOutLabel As Label
     Friend WithEvents Label2 As Label
     Friend WithEvents Label1 As Label
+    Friend WithEvents SerialPortComboBox As ToolStripComboBox
+    Friend WithEvents BaudRateComboBox As ToolStripComboBox
+    Friend WithEvents BaudRateLabel As Label
+    Friend WithEvents ComPortLabel As Label
+    Friend WithEvents LoadButton As Button
+    Friend WithEvents ConnectButton As Button
 End Class
