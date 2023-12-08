@@ -5,7 +5,7 @@ Option Explicit On
 
 'DONE ----2)Serial port connect and file save - hw graph temp 
 '2.5) Serial setting load automatcally?????? 
-'3)talk to qy@ board - hw qy@ board
+'DONE ----3)talk to qy@ board - hw qy@ board
 '4) Heater  - input, outputs, indicators, mode on, timer(s)
 '5) AC
 '6) fan
@@ -34,6 +34,118 @@ Public Class HVACControllerForm
     Private Sub TempDownButton_Click(sender As Object, e As EventArgs) Handles TempDownButton.Click
 
     End Sub
+    '===========================================================================
+    Private Sub Test3Button_Click(sender As Object, e As EventArgs) Handles Test3Button.Click
+        Delay()
+    End Sub
+
+    Private Sub Test2Button_Click(sender As Object, e As EventArgs) Handles Test2Button.Click
+        'Interlock()
+    End Sub
+
+    '==============================================================================
+    'TODO - 1)stop all functions
+    'TODO - 2)disable all functions til system is reset
+    'TODO - 3)Error message display once
+    'Sub - 
+    Sub Interlock()
+        If SafetyIndicatorLabel.Visible = True Then
+            SafetyIndicatorLabel.BackColor = Color.FromArgb(200, 150, 10)
+            'MsgBox("WARNING!!!!!!! Safety Tripped! All systems disabled")
+            TXdata(0) = 32                                 'Command byte 1 for digital outputs
+            TXdata(1) = 1                              'Command byte 2 for digital output 1
+            TXdata(2) = 0
+            SendData()
+            'Stop all functions
+            'Disable all functions until interlock is reset
+        End If
+    End Sub
+
+    'TODO 1) pre fan
+    'TODO 2) post fan
+    'TODO 1) file / error report???
+    'Sub-
+    Sub Heater()
+        If HeaterIndicatorLabel.Visible = True Then
+            HeaterStatusLabel.Text = "Heater On"
+            'TXdata(0) = 32                                 'Command byte 1 for digital outputs
+            'TXdata(1) = 8                              'Command byte 2 for digital output 1
+            'TXdata(2) = 0
+            'SendData()
+            'Delay()
+            HeaterIndicatorLabel.Text = "Heating"
+            HeaterIndicatorLabel.BackColor = Color.FromArgb(255, 0, 10)
+            TXdata(0) = 32                                 'Command byte 1 for digital outputs
+            TXdata(1) = 2                              'Command byte 2 for digital output 1
+            TXdata(2) = 0
+            SendData()
+        ElseIf HeaterIndicatorLabel.Visible = False Then
+            HeaterStatusLabel.Text = "Heater Off"
+        End If
+    End Sub
+
+    Sub AC()
+        If ACIndicatorLabel.Visible = True Then
+            ACStatusLabel.Text = "AC On"
+            'Prefan code here
+            ACIndicatorLabel.Text = "Cooling"
+            ACIndicatorLabel.BackColor = Color.FromArgb(100, 100, 255)
+            TXdata(0) = 32                                 'Command byte 1 for digital outputs
+            TXdata(1) = 4                              'Command byte 2 for digital output 1
+            TXdata(2) = 0
+            SendData()
+            'post fan code here
+        ElseIf ACIndicatorLabel.Visible = False Then
+            ACStatusLabel.Text = "AC Off"
+        End If
+    End Sub
+
+    'Sub
+    Sub FanOnly()
+        If FanIndicatorLabel.Visible = True Then
+            FanStatusLabel.Text = "Fan On"
+
+            FanIndicatorLabel.Text = "Fanning"
+            FanIndicatorLabel.BackColor = Color.FromArgb(150, 230, 10)
+            TXdata(0) = 32                                 'Command byte 1 for digital outputs
+            TXdata(1) = 8                              'Command byte 2 for digital output 1
+            TXdata(2) = 0
+            SendData()
+        ElseIf FanIndicatorLabel.Visible = False Then
+            FanStatusLabel.Text = "Fan Off"
+        End If
+    End Sub
+
+    'Sub
+    Sub Pressure()
+        If PressureIndicatorLabel.Visible = True Then
+            PressureStatusLabel.Text = "Pressure Error"
+
+            PressureIndicatorLabel.Text = "Error"
+            PressureIndicatorLabel.BackColor = Color.FromArgb(190, 50, 190)
+            TXdata(0) = 32                                 'Command byte 1 for digital outputs
+            TXdata(1) = 128                              'Command byte 2 for digital output 1
+            TXdata(2) = 0
+            SendData()
+        ElseIf PressureIndicatorLabel.Visible = False Then
+            PressureStatusLabel.Text = "Reading Pressure"
+        End If
+    End Sub
+
+    'Sub - Pauses program for 5 seconds
+    Sub Delay()
+        Threading.Thread.Sleep(5000)
+    End Sub
+
+
+    Sub FunctionLoad()
+        SafetyIndicatorLabel.Visible = False
+        HeaterIndicatorLabel.Visible = False
+        ACIndicatorLabel.Visible = False
+        FanIndicatorLabel.Visible = False
+        PressureIndicatorLabel.Visible = False
+    End Sub
+    '============================================================================
 
     'Timer - Draws input in picture box, communicates with the Qy@ board and processes recieved data
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
@@ -56,15 +168,26 @@ Public Class HVACControllerForm
 
             ElseIf txCount = 3 Then
                 DigitalIn()
+
+            ElseIf txCount = 4 Then
+                DigitalOut()
                 txCount = 0
             End If
             'Transmit and receive data from Qy@ analog input 1 
 
-
+            Interlock()
+            Heater()
+            AC()
+            FanOnly()
+            Pressure()
         End If
 
         ReceiveData()
     End Sub
+
+
+
+
 
 
     '======================Sub Routines data to and from Qy@ board===============
@@ -212,41 +335,51 @@ Public Class HVACControllerForm
         If dataIn1 = 254 Then                        'recived byte for digital input 1
             'DI1CheckBox.Checked = True
             DigIn1Label.Text = "Pressed"
+            SafetyIndicatorLabel.Visible = True
         Else
             'DI1CheckBox.Checked = False
             DigIn1Label.Text = "Digital In 1"
+            SafetyIndicatorLabel.Visible = False
         End If
 
         If dataIn1 = 253 Then                         'recived byte for digital input 2
             'DI2CheckBox.Checked = True
             DigIn2Label.Text = "Pressed"
+            HeaterIndicatorLabel.Visible = True
         Else
             'DI2CheckBox.Checked = False
             DigIn2Label.Text = "Digital In 2"
+            HeaterIndicatorLabel.Visible = False
         End If
 
         If dataIn1 = 251 Then                          'recived byte for digital input 3
             'DI3CheckBox.Checked = True
             DigIn3Label.Text = "Pressed"
+            FanIndicatorLabel.Visible = True
         Else
             'DI3CheckBox.Checked = False
             DigIn3Label.Text = "Digital In 3"
+            FanIndicatorLabel.Visible = False
         End If
 
         If dataIn1 = 247 Then                          'recived byte for digital input 4
             'DI4CheckBox.Checked = True
             DigIn4Label.Text = "Pressed"
+            PressureIndicatorLabel.Visible = True
         Else
             'DI4CheckBox.Checked = False
             DigIn4Label.Text = "Digital In 4"
+            PressureIndicatorLabel.Visible = False
         End If
 
         If dataIn1 = 239 Then                          'recived byte for digital input 5
             'DI5CheckBox.Checked = True
             DigIn5Label.Text = "Pressed"
+            ACIndicatorLabel.Visible = True
         Else
             'DI5CheckBox.Checked = False
             DigIn5Label.Text = "Digital In 5"
+            ACIndicatorLabel.Visible = False
         End If
 
 
@@ -277,58 +410,58 @@ Public Class HVACControllerForm
         End If
     End Sub
 
-    'Sends command to active digital outputs
-    ''Priorty display - highest checked box is output displayed
-    'Sub DigitalOut()
-    '    If DOutEnableRadioButton.Checked = True Then       'Enables Digital out puts
-    '        TXdata(0) = 32                                 'Command byte 1 for digital outputs
-    '        If DO1CheckBox.Checked = True Then
-    '            TXdata(1) = 1                              'Command byte 2 for digital output 1
-    '            TXdata(2) = 0
-    '        End If
+    'Sends command To active digital outputs
+    'Priorty display - highest checked box is output displayed
+    Sub DigitalOut()
+        If txCount = 4 Then                                'Enables Digital out puts
+            TXdata(0) = 32                                 'Command byte 1 for digital outputs
+            If DO1CheckBox.Checked = True Then
+                TXdata(1) = 1                              'Command byte 2 for digital output 1
+                TXdata(2) = 0
+            End If
 
-    '        If DO2CheckBox.Checked = True Then
-    '            TXdata(1) = 2                              'Command byte 2 for digital output 2
-    '            TXdata(2) = 0
-    '        End If
+            If DO2CheckBox.Checked = True Then
+                TXdata(1) = 2                              'Command byte 2 for digital output 2
+                TXdata(2) = 0
+            End If
 
-    '        If DO3CheckBox.Checked = True Then
-    '            TXdata(1) = 4                               'Command byte 2 for digital output 3
-    '            TXdata(2) = 0
-    '        End If
+            If DO3CheckBox.Checked = True Then
+                TXdata(1) = 4                               'Command byte 2 for digital output 3
+                TXdata(2) = 0
+            End If
 
-    '        If DO4CheckBox.Checked = True Then
-    '            TXdata(1) = 8                               'Command byte 2 for digital output 4
-    '            TXdata(2) = 0
-    '        End If
+            If DO4CheckBox.Checked = True Then
+                TXdata(1) = 8                               'Command byte 2 for digital output 4
+                TXdata(2) = 0
+            End If
 
-    '        If DO5CheckBox.Checked = True Then
-    '            TXdata(1) = 16                              'Command byte 2 for digital output 5
-    '            TXdata(2) = 0
-    '        End If
+            If DO5CheckBox.Checked = True Then
+                TXdata(1) = 16                              'Command byte 2 for digital output 5
+                TXdata(2) = 0
+            End If
 
-    '        If DO6CheckBox.Checked = True Then
-    '            TXdata(1) = 32                              'Command byte 2 for digital output 6
-    '            TXdata(2) = 0
-    '        End If
+            If DO6CheckBox.Checked = True Then
+                TXdata(1) = 32                              'Command byte 2 for digital output 6
+                TXdata(2) = 0
+            End If
 
-    '        If DO7CheckBox.Checked = True Then
-    '            TXdata(1) = 64                              'Command byte 2 for digital output 7
-    '            TXdata(2) = 0
-    '        End If
+            If DO7CheckBox.Checked = True Then
+                TXdata(1) = 64                              'Command byte 2 for digital output 7
+                TXdata(2) = 0
+            End If
 
-    '        If DO8CheckBox.Checked = True Then
-    '            TXdata(1) = 128                             'Command byte 2 for digital output 8
-    '            TXdata(2) = 0
-    '        End If
+            If DO8CheckBox.Checked = True Then
+                TXdata(1) = 128                             'Command byte 2 for digital output 8
+                TXdata(2) = 0
+            End If
 
-    '        SendData()                                       'Send command to for digital output
-    '    End If
-    'End Sub
+            SendData()                                       'Send command to for digital output
+        End If
+    End Sub
 
 
-    '====================Sub Routines Set up Serial Port=============================
-    'Sub - Sets current date and time
+    ' ====================Sub Routines Set up Serial Port=============================
+    ' Sub - Sets current date and time
     Sub DateDisplay()
         Dim timeTemp As String
         Dim dayTemp As Date
@@ -514,6 +647,9 @@ Public Class HVACControllerForm
         BaudRate()
 
         OpenPort()
+
+        FunctionLoad()
+
 
 
 

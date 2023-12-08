@@ -52,10 +52,27 @@ Partial Class HVACControllerForm
         Me.FanStatusLabel = New System.Windows.Forms.Label()
         Me.PressureStatusLabel = New System.Windows.Forms.Label()
         Me.TestGroupBox = New System.Windows.Forms.GroupBox()
+        Me.DOutGroupBox = New System.Windows.Forms.GroupBox()
+        Me.DO5CheckBox = New System.Windows.Forms.CheckBox()
+        Me.DO6CheckBox = New System.Windows.Forms.CheckBox()
+        Me.DO7CheckBox = New System.Windows.Forms.CheckBox()
+        Me.DO8CheckBox = New System.Windows.Forms.CheckBox()
+        Me.DO4CheckBox = New System.Windows.Forms.CheckBox()
+        Me.DO3CheckBox = New System.Windows.Forms.CheckBox()
+        Me.DO2CheckBox = New System.Windows.Forms.CheckBox()
+        Me.DO1CheckBox = New System.Windows.Forms.CheckBox()
+        Me.DigOut8Label = New System.Windows.Forms.Label()
+        Me.DigOut7Label = New System.Windows.Forms.Label()
+        Me.DigIn8Label = New System.Windows.Forms.Label()
+        Me.DigIn5Label = New System.Windows.Forms.Label()
         Me.BaudRateLabel = New System.Windows.Forms.Label()
+        Me.DigIn7Label = New System.Windows.Forms.Label()
         Me.DigOut1Label = New System.Windows.Forms.Label()
+        Me.DigIn6Label = New System.Windows.Forms.Label()
         Me.DigOut2Label = New System.Windows.Forms.Label()
+        Me.DigOut6Label = New System.Windows.Forms.Label()
         Me.ComPortLabel = New System.Windows.Forms.Label()
+        Me.DigOut5Label = New System.Windows.Forms.Label()
         Me.DigOut3Label = New System.Windows.Forms.Label()
         Me.DigOut4Label = New System.Windows.Forms.Label()
         Me.TXLabel = New System.Windows.Forms.Label()
@@ -70,22 +87,19 @@ Partial Class HVACControllerForm
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.Timer2 = New System.Windows.Forms.Timer(Me.components)
         Me.label15 = New System.Windows.Forms.Label()
-        Me.DigOut5Label = New System.Windows.Forms.Label()
-        Me.DigOut6Label = New System.Windows.Forms.Label()
-        Me.DigIn6Label = New System.Windows.Forms.Label()
-        Me.DigIn7Label = New System.Windows.Forms.Label()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.DigIn5Label = New System.Windows.Forms.Label()
-        Me.label1 = New System.Windows.Forms.Label()
         Me.LoadButton = New System.Windows.Forms.Button()
         Me.ConnectButton = New System.Windows.Forms.Button()
         Me.ExitButton = New System.Windows.Forms.Button()
-        Me.DigIn8Label = New System.Windows.Forms.Label()
-        Me.DigOut7Label = New System.Windows.Forms.Label()
-        Me.DigOut8Label = New System.Windows.Forms.Label()
+        Me.label1 = New System.Windows.Forms.Label()
+        Me.Test3Button = New System.Windows.Forms.Button()
+        Me.Test2Button = New System.Windows.Forms.Button()
+        Me.Test1Button = New System.Windows.Forms.Button()
+        Me.SafetyIndicatorLabel = New System.Windows.Forms.Label()
         Me.SerialSettingsMenuStrip.SuspendLayout()
         Me.ThermostatGroupBox.SuspendLayout()
         Me.TestGroupBox.SuspendLayout()
+        Me.DOutGroupBox.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -96,7 +110,7 @@ Partial Class HVACControllerForm
         Me.SerialSettingsMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SetSettingsToolStripMenuItem})
         Me.SerialSettingsMenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.SerialSettingsMenuStrip.Name = "SerialSettingsMenuStrip"
-        Me.SerialSettingsMenuStrip.Size = New System.Drawing.Size(1074, 36)
+        Me.SerialSettingsMenuStrip.Size = New System.Drawing.Size(1074, 33)
         Me.SerialSettingsMenuStrip.TabIndex = 1
         Me.SerialSettingsMenuStrip.Text = "Serial Settings"
         '
@@ -104,7 +118,7 @@ Partial Class HVACControllerForm
         '
         Me.SetSettingsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SetSerialSettingsToolStripMenuItem, Me.SaveSettingsToolStripMenuItem, Me.ExitToolStripMenuItem})
         Me.SetSettingsToolStripMenuItem.Name = "SetSettingsToolStripMenuItem"
-        Me.SetSettingsToolStripMenuItem.Size = New System.Drawing.Size(92, 30)
+        Me.SetSettingsToolStripMenuItem.Size = New System.Drawing.Size(92, 29)
         Me.SetSettingsToolStripMenuItem.Text = "Settings"
         '
         'SetSerialSettingsToolStripMenuItem
@@ -154,6 +168,7 @@ Partial Class HVACControllerForm
         '
         'ThermostatGroupBox
         '
+        Me.ThermostatGroupBox.Controls.Add(Me.SafetyIndicatorLabel)
         Me.ThermostatGroupBox.Controls.Add(Me.HeatSetTempTextBox)
         Me.ThermostatGroupBox.Controls.Add(Me.ColdSetTempTextBox)
         Me.ThermostatGroupBox.Controls.Add(Me.TempDownButton)
@@ -250,7 +265,7 @@ Partial Class HVACControllerForm
         'CurrentTempLabel
         '
         Me.CurrentTempLabel.AutoSize = True
-        Me.CurrentTempLabel.Location = New System.Drawing.Point(75, 70)
+        Me.CurrentTempLabel.Location = New System.Drawing.Point(75, 54)
         Me.CurrentTempLabel.Name = "CurrentTempLabel"
         Me.CurrentTempLabel.Size = New System.Drawing.Size(106, 20)
         Me.CurrentTempLabel.TabIndex = 10
@@ -339,6 +354,7 @@ Partial Class HVACControllerForm
         '
         'TestGroupBox
         '
+        Me.TestGroupBox.Controls.Add(Me.DOutGroupBox)
         Me.TestGroupBox.Controls.Add(Me.DigOut8Label)
         Me.TestGroupBox.Controls.Add(Me.DigOut7Label)
         Me.TestGroupBox.Controls.Add(Me.DigIn8Label)
@@ -363,10 +379,135 @@ Partial Class HVACControllerForm
         Me.TestGroupBox.Controls.Add(Me.DigIn4Label)
         Me.TestGroupBox.Location = New System.Drawing.Point(12, 333)
         Me.TestGroupBox.Name = "TestGroupBox"
-        Me.TestGroupBox.Size = New System.Drawing.Size(634, 273)
+        Me.TestGroupBox.Size = New System.Drawing.Size(651, 283)
         Me.TestGroupBox.TabIndex = 3
         Me.TestGroupBox.TabStop = False
         Me.TestGroupBox.Text = "Testing GroupBox"
+        '
+        'DOutGroupBox
+        '
+        Me.DOutGroupBox.Controls.Add(Me.DO5CheckBox)
+        Me.DOutGroupBox.Controls.Add(Me.DO6CheckBox)
+        Me.DOutGroupBox.Controls.Add(Me.DO7CheckBox)
+        Me.DOutGroupBox.Controls.Add(Me.DO8CheckBox)
+        Me.DOutGroupBox.Controls.Add(Me.DO4CheckBox)
+        Me.DOutGroupBox.Controls.Add(Me.DO3CheckBox)
+        Me.DOutGroupBox.Controls.Add(Me.DO2CheckBox)
+        Me.DOutGroupBox.Controls.Add(Me.DO1CheckBox)
+        Me.DOutGroupBox.Location = New System.Drawing.Point(559, 16)
+        Me.DOutGroupBox.Name = "DOutGroupBox"
+        Me.DOutGroupBox.Size = New System.Drawing.Size(78, 261)
+        Me.DOutGroupBox.TabIndex = 56
+        Me.DOutGroupBox.TabStop = False
+        Me.DOutGroupBox.Text = "Dig Out"
+        '
+        'DO5CheckBox
+        '
+        Me.DO5CheckBox.AutoSize = True
+        Me.DO5CheckBox.Location = New System.Drawing.Point(18, 148)
+        Me.DO5CheckBox.Name = "DO5CheckBox"
+        Me.DO5CheckBox.Size = New System.Drawing.Size(22, 21)
+        Me.DO5CheckBox.TabIndex = 62
+        Me.DO5CheckBox.UseVisualStyleBackColor = True
+        '
+        'DO6CheckBox
+        '
+        Me.DO6CheckBox.AutoSize = True
+        Me.DO6CheckBox.Location = New System.Drawing.Point(18, 178)
+        Me.DO6CheckBox.Name = "DO6CheckBox"
+        Me.DO6CheckBox.Size = New System.Drawing.Size(22, 21)
+        Me.DO6CheckBox.TabIndex = 61
+        Me.DO6CheckBox.UseVisualStyleBackColor = True
+        '
+        'DO7CheckBox
+        '
+        Me.DO7CheckBox.AutoSize = True
+        Me.DO7CheckBox.Location = New System.Drawing.Point(18, 208)
+        Me.DO7CheckBox.Name = "DO7CheckBox"
+        Me.DO7CheckBox.Size = New System.Drawing.Size(22, 21)
+        Me.DO7CheckBox.TabIndex = 60
+        Me.DO7CheckBox.UseVisualStyleBackColor = True
+        '
+        'DO8CheckBox
+        '
+        Me.DO8CheckBox.AutoSize = True
+        Me.DO8CheckBox.Location = New System.Drawing.Point(18, 238)
+        Me.DO8CheckBox.Name = "DO8CheckBox"
+        Me.DO8CheckBox.Size = New System.Drawing.Size(22, 21)
+        Me.DO8CheckBox.TabIndex = 59
+        Me.DO8CheckBox.UseVisualStyleBackColor = True
+        '
+        'DO4CheckBox
+        '
+        Me.DO4CheckBox.AutoSize = True
+        Me.DO4CheckBox.Location = New System.Drawing.Point(18, 118)
+        Me.DO4CheckBox.Name = "DO4CheckBox"
+        Me.DO4CheckBox.Size = New System.Drawing.Size(22, 21)
+        Me.DO4CheckBox.TabIndex = 58
+        Me.DO4CheckBox.UseVisualStyleBackColor = True
+        '
+        'DO3CheckBox
+        '
+        Me.DO3CheckBox.AutoSize = True
+        Me.DO3CheckBox.Location = New System.Drawing.Point(18, 94)
+        Me.DO3CheckBox.Name = "DO3CheckBox"
+        Me.DO3CheckBox.Size = New System.Drawing.Size(22, 21)
+        Me.DO3CheckBox.TabIndex = 57
+        Me.DO3CheckBox.UseVisualStyleBackColor = True
+        '
+        'DO2CheckBox
+        '
+        Me.DO2CheckBox.AutoSize = True
+        Me.DO2CheckBox.Location = New System.Drawing.Point(18, 69)
+        Me.DO2CheckBox.Name = "DO2CheckBox"
+        Me.DO2CheckBox.Size = New System.Drawing.Size(22, 21)
+        Me.DO2CheckBox.TabIndex = 56
+        Me.DO2CheckBox.UseVisualStyleBackColor = True
+        '
+        'DO1CheckBox
+        '
+        Me.DO1CheckBox.AutoSize = True
+        Me.DO1CheckBox.Location = New System.Drawing.Point(18, 42)
+        Me.DO1CheckBox.Name = "DO1CheckBox"
+        Me.DO1CheckBox.Size = New System.Drawing.Size(22, 21)
+        Me.DO1CheckBox.TabIndex = 55
+        Me.DO1CheckBox.UseVisualStyleBackColor = True
+        '
+        'DigOut8Label
+        '
+        Me.DigOut8Label.AutoSize = True
+        Me.DigOut8Label.Location = New System.Drawing.Point(455, 247)
+        Me.DigOut8Label.Name = "DigOut8Label"
+        Me.DigOut8Label.Size = New System.Drawing.Size(96, 20)
+        Me.DigOut8Label.TabIndex = 39
+        Me.DigOut8Label.Text = "Digital Out 8"
+        '
+        'DigOut7Label
+        '
+        Me.DigOut7Label.AutoSize = True
+        Me.DigOut7Label.Location = New System.Drawing.Point(455, 214)
+        Me.DigOut7Label.Name = "DigOut7Label"
+        Me.DigOut7Label.Size = New System.Drawing.Size(96, 20)
+        Me.DigOut7Label.TabIndex = 38
+        Me.DigOut7Label.Text = "Digital Out 7"
+        '
+        'DigIn8Label
+        '
+        Me.DigIn8Label.AutoSize = True
+        Me.DigIn8Label.Location = New System.Drawing.Point(365, 244)
+        Me.DigIn8Label.Name = "DigIn8Label"
+        Me.DigIn8Label.Size = New System.Drawing.Size(84, 20)
+        Me.DigIn8Label.TabIndex = 37
+        Me.DigIn8Label.Text = "Digital In 8"
+        '
+        'DigIn5Label
+        '
+        Me.DigIn5Label.AutoSize = True
+        Me.DigIn5Label.Location = New System.Drawing.Point(365, 151)
+        Me.DigIn5Label.Name = "DigIn5Label"
+        Me.DigIn5Label.Size = New System.Drawing.Size(84, 20)
+        Me.DigIn5Label.TabIndex = 26
+        Me.DigIn5Label.Text = "Digital In 5"
         '
         'BaudRateLabel
         '
@@ -377,23 +518,50 @@ Partial Class HVACControllerForm
         Me.BaudRateLabel.TabIndex = 27
         Me.BaudRateLabel.Text = "Baud Rate"
         '
+        'DigIn7Label
+        '
+        Me.DigIn7Label.AutoSize = True
+        Me.DigIn7Label.Location = New System.Drawing.Point(365, 217)
+        Me.DigIn7Label.Name = "DigIn7Label"
+        Me.DigIn7Label.Size = New System.Drawing.Size(84, 20)
+        Me.DigIn7Label.TabIndex = 24
+        Me.DigIn7Label.Text = "Digital In 7"
+        '
         'DigOut1Label
         '
         Me.DigOut1Label.AutoSize = True
-        Me.DigOut1Label.Location = New System.Drawing.Point(508, 28)
+        Me.DigOut1Label.Location = New System.Drawing.Point(455, 25)
         Me.DigOut1Label.Name = "DigOut1Label"
         Me.DigOut1Label.Size = New System.Drawing.Size(96, 20)
         Me.DigOut1Label.TabIndex = 36
         Me.DigOut1Label.Text = "Digital Out 1"
         '
+        'DigIn6Label
+        '
+        Me.DigIn6Label.AutoSize = True
+        Me.DigIn6Label.Location = New System.Drawing.Point(365, 183)
+        Me.DigIn6Label.Name = "DigIn6Label"
+        Me.DigIn6Label.Size = New System.Drawing.Size(84, 20)
+        Me.DigIn6Label.TabIndex = 23
+        Me.DigIn6Label.Text = "Digital In 6"
+        '
         'DigOut2Label
         '
         Me.DigOut2Label.AutoSize = True
-        Me.DigOut2Label.Location = New System.Drawing.Point(508, 59)
+        Me.DigOut2Label.Location = New System.Drawing.Point(455, 56)
         Me.DigOut2Label.Name = "DigOut2Label"
         Me.DigOut2Label.Size = New System.Drawing.Size(96, 20)
         Me.DigOut2Label.TabIndex = 35
         Me.DigOut2Label.Text = "Digital Out 2"
+        '
+        'DigOut6Label
+        '
+        Me.DigOut6Label.AutoSize = True
+        Me.DigOut6Label.Location = New System.Drawing.Point(455, 186)
+        Me.DigOut6Label.Name = "DigOut6Label"
+        Me.DigOut6Label.Size = New System.Drawing.Size(96, 20)
+        Me.DigOut6Label.TabIndex = 22
+        Me.DigOut6Label.Text = "Digital Out 6"
         '
         'ComPortLabel
         '
@@ -404,10 +572,19 @@ Partial Class HVACControllerForm
         Me.ComPortLabel.TabIndex = 28
         Me.ComPortLabel.Text = "Serial Port"
         '
+        'DigOut5Label
+        '
+        Me.DigOut5Label.AutoSize = True
+        Me.DigOut5Label.Location = New System.Drawing.Point(455, 154)
+        Me.DigOut5Label.Name = "DigOut5Label"
+        Me.DigOut5Label.Size = New System.Drawing.Size(96, 20)
+        Me.DigOut5Label.TabIndex = 16
+        Me.DigOut5Label.Text = "Digital Out 5"
+        '
         'DigOut3Label
         '
         Me.DigOut3Label.AutoSize = True
-        Me.DigOut3Label.Location = New System.Drawing.Point(508, 93)
+        Me.DigOut3Label.Location = New System.Drawing.Point(455, 90)
         Me.DigOut3Label.Name = "DigOut3Label"
         Me.DigOut3Label.Size = New System.Drawing.Size(96, 20)
         Me.DigOut3Label.TabIndex = 34
@@ -416,7 +593,7 @@ Partial Class HVACControllerForm
         'DigOut4Label
         '
         Me.DigOut4Label.AutoSize = True
-        Me.DigOut4Label.Location = New System.Drawing.Point(508, 124)
+        Me.DigOut4Label.Location = New System.Drawing.Point(455, 121)
         Me.DigOut4Label.Name = "DigOut4Label"
         Me.DigOut4Label.Size = New System.Drawing.Size(96, 20)
         Me.DigOut4Label.TabIndex = 33
@@ -443,7 +620,7 @@ Partial Class HVACControllerForm
         'AnIn1Label
         '
         Me.AnIn1Label.AutoSize = True
-        Me.AnIn1Label.Location = New System.Drawing.Point(300, 33)
+        Me.AnIn1Label.Location = New System.Drawing.Point(295, 25)
         Me.AnIn1Label.Name = "AnIn1Label"
         Me.AnIn1Label.Size = New System.Drawing.Size(60, 20)
         Me.AnIn1Label.TabIndex = 30
@@ -452,7 +629,7 @@ Partial Class HVACControllerForm
         'AnIn2Label
         '
         Me.AnIn2Label.AutoSize = True
-        Me.AnIn2Label.Location = New System.Drawing.Point(300, 67)
+        Me.AnIn2Label.Location = New System.Drawing.Point(295, 59)
         Me.AnIn2Label.Name = "AnIn2Label"
         Me.AnIn2Label.Size = New System.Drawing.Size(60, 20)
         Me.AnIn2Label.TabIndex = 29
@@ -461,7 +638,7 @@ Partial Class HVACControllerForm
         'DigIn1Label
         '
         Me.DigIn1Label.AutoSize = True
-        Me.DigIn1Label.Location = New System.Drawing.Point(414, 28)
+        Me.DigIn1Label.Location = New System.Drawing.Point(365, 22)
         Me.DigIn1Label.Name = "DigIn1Label"
         Me.DigIn1Label.Size = New System.Drawing.Size(84, 20)
         Me.DigIn1Label.TabIndex = 28
@@ -470,7 +647,7 @@ Partial Class HVACControllerForm
         'DigIn2Label
         '
         Me.DigIn2Label.AutoSize = True
-        Me.DigIn2Label.Location = New System.Drawing.Point(414, 59)
+        Me.DigIn2Label.Location = New System.Drawing.Point(365, 53)
         Me.DigIn2Label.Name = "DigIn2Label"
         Me.DigIn2Label.Size = New System.Drawing.Size(84, 20)
         Me.DigIn2Label.TabIndex = 27
@@ -479,7 +656,7 @@ Partial Class HVACControllerForm
         'DigIn3Label
         '
         Me.DigIn3Label.AutoSize = True
-        Me.DigIn3Label.Location = New System.Drawing.Point(414, 93)
+        Me.DigIn3Label.Location = New System.Drawing.Point(365, 87)
         Me.DigIn3Label.Name = "DigIn3Label"
         Me.DigIn3Label.Size = New System.Drawing.Size(84, 20)
         Me.DigIn3Label.TabIndex = 26
@@ -488,7 +665,7 @@ Partial Class HVACControllerForm
         'DigIn4Label
         '
         Me.DigIn4Label.AutoSize = True
-        Me.DigIn4Label.Location = New System.Drawing.Point(414, 124)
+        Me.DigIn4Label.Location = New System.Drawing.Point(365, 118)
         Me.DigIn4Label.Name = "DigIn4Label"
         Me.DigIn4Label.Size = New System.Drawing.Size(84, 20)
         Me.DigIn4Label.TabIndex = 25
@@ -509,50 +686,17 @@ Partial Class HVACControllerForm
         'label15
         '
         Me.label15.AutoSize = True
-        Me.label15.Location = New System.Drawing.Point(42, 90)
+        Me.label15.Location = New System.Drawing.Point(31, 22)
         Me.label15.Name = "label15"
         Me.label15.Size = New System.Drawing.Size(109, 20)
         Me.label15.TabIndex = 17
         Me.label15.Text = "Date and time"
         '
-        'DigOut5Label
-        '
-        Me.DigOut5Label.AutoSize = True
-        Me.DigOut5Label.Location = New System.Drawing.Point(508, 157)
-        Me.DigOut5Label.Name = "DigOut5Label"
-        Me.DigOut5Label.Size = New System.Drawing.Size(96, 20)
-        Me.DigOut5Label.TabIndex = 16
-        Me.DigOut5Label.Text = "Digital Out 5"
-        '
-        'DigOut6Label
-        '
-        Me.DigOut6Label.AutoSize = True
-        Me.DigOut6Label.Location = New System.Drawing.Point(508, 189)
-        Me.DigOut6Label.Name = "DigOut6Label"
-        Me.DigOut6Label.Size = New System.Drawing.Size(96, 20)
-        Me.DigOut6Label.TabIndex = 22
-        Me.DigOut6Label.Text = "Digital Out 6"
-        '
-        'DigIn6Label
-        '
-        Me.DigIn6Label.AutoSize = True
-        Me.DigIn6Label.Location = New System.Drawing.Point(414, 189)
-        Me.DigIn6Label.Name = "DigIn6Label"
-        Me.DigIn6Label.Size = New System.Drawing.Size(84, 20)
-        Me.DigIn6Label.TabIndex = 23
-        Me.DigIn6Label.Text = "Digital In 6"
-        '
-        'DigIn7Label
-        '
-        Me.DigIn7Label.AutoSize = True
-        Me.DigIn7Label.Location = New System.Drawing.Point(414, 223)
-        Me.DigIn7Label.Name = "DigIn7Label"
-        Me.DigIn7Label.Size = New System.Drawing.Size(84, 20)
-        Me.DigIn7Label.TabIndex = 24
-        Me.DigIn7Label.Text = "Digital In 7"
-        '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.Test1Button)
+        Me.GroupBox1.Controls.Add(Me.Test2Button)
+        Me.GroupBox1.Controls.Add(Me.Test3Button)
         Me.GroupBox1.Controls.Add(Me.ExitButton)
         Me.GroupBox1.Controls.Add(Me.label1)
         Me.GroupBox1.Controls.Add(Me.label15)
@@ -563,26 +707,9 @@ Partial Class HVACControllerForm
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "GroupBox1"
         '
-        'DigIn5Label
-        '
-        Me.DigIn5Label.AutoSize = True
-        Me.DigIn5Label.Location = New System.Drawing.Point(414, 157)
-        Me.DigIn5Label.Name = "DigIn5Label"
-        Me.DigIn5Label.Size = New System.Drawing.Size(84, 20)
-        Me.DigIn5Label.TabIndex = 26
-        Me.DigIn5Label.Text = "Digital In 5"
-        '
-        'label1
-        '
-        Me.label1.AutoSize = True
-        Me.label1.Location = New System.Drawing.Point(42, 22)
-        Me.label1.Name = "label1"
-        Me.label1.Size = New System.Drawing.Size(0, 20)
-        Me.label1.TabIndex = 25
-        '
         'LoadButton
         '
-        Me.LoadButton.Location = New System.Drawing.Point(652, 353)
+        Me.LoadButton.Location = New System.Drawing.Point(896, 74)
         Me.LoadButton.Name = "LoadButton"
         Me.LoadButton.Size = New System.Drawing.Size(151, 30)
         Me.LoadButton.TabIndex = 22
@@ -591,7 +718,7 @@ Partial Class HVACControllerForm
         '
         'ConnectButton
         '
-        Me.ConnectButton.Location = New System.Drawing.Point(652, 400)
+        Me.ConnectButton.Location = New System.Drawing.Point(896, 124)
         Me.ConnectButton.Name = "ConnectButton"
         Me.ConnectButton.Size = New System.Drawing.Size(151, 30)
         Me.ConnectButton.TabIndex = 36
@@ -607,32 +734,49 @@ Partial Class HVACControllerForm
         Me.ExitButton.Text = "Exit"
         Me.ExitButton.UseVisualStyleBackColor = True
         '
-        'DigIn8Label
+        'label1
         '
-        Me.DigIn8Label.AutoSize = True
-        Me.DigIn8Label.Location = New System.Drawing.Point(414, 250)
-        Me.DigIn8Label.Name = "DigIn8Label"
-        Me.DigIn8Label.Size = New System.Drawing.Size(84, 20)
-        Me.DigIn8Label.TabIndex = 37
-        Me.DigIn8Label.Text = "Digital In 8"
+        Me.label1.AutoSize = True
+        Me.label1.Location = New System.Drawing.Point(42, 22)
+        Me.label1.Name = "label1"
+        Me.label1.Size = New System.Drawing.Size(0, 20)
+        Me.label1.TabIndex = 25
         '
-        'DigOut7Label
+        'Test3Button
         '
-        Me.DigOut7Label.AutoSize = True
-        Me.DigOut7Label.Location = New System.Drawing.Point(508, 217)
-        Me.DigOut7Label.Name = "DigOut7Label"
-        Me.DigOut7Label.Size = New System.Drawing.Size(96, 20)
-        Me.DigOut7Label.TabIndex = 38
-        Me.DigOut7Label.Text = "Digital Out 7"
+        Me.Test3Button.Location = New System.Drawing.Point(17, 51)
+        Me.Test3Button.Name = "Test3Button"
+        Me.Test3Button.Size = New System.Drawing.Size(151, 30)
+        Me.Test3Button.TabIndex = 38
+        Me.Test3Button.Text = " Delay 5 sec"
+        Me.Test3Button.UseVisualStyleBackColor = True
         '
-        'DigOut8Label
+        'Test2Button
         '
-        Me.DigOut8Label.AutoSize = True
-        Me.DigOut8Label.Location = New System.Drawing.Point(508, 250)
-        Me.DigOut8Label.Name = "DigOut8Label"
-        Me.DigOut8Label.Size = New System.Drawing.Size(96, 20)
-        Me.DigOut8Label.TabIndex = 39
-        Me.DigOut8Label.Text = "Digital Out 8"
+        Me.Test2Button.Location = New System.Drawing.Point(17, 98)
+        Me.Test2Button.Name = "Test2Button"
+        Me.Test2Button.Size = New System.Drawing.Size(151, 30)
+        Me.Test2Button.TabIndex = 39
+        Me.Test2Button.Text = "Test Button 2"
+        Me.Test2Button.UseVisualStyleBackColor = True
+        '
+        'Test1Button
+        '
+        Me.Test1Button.Location = New System.Drawing.Point(17, 143)
+        Me.Test1Button.Name = "Test1Button"
+        Me.Test1Button.Size = New System.Drawing.Size(151, 30)
+        Me.Test1Button.TabIndex = 40
+        Me.Test1Button.Text = "Test Button 1"
+        Me.Test1Button.UseVisualStyleBackColor = True
+        '
+        'SafetyIndicatorLabel
+        '
+        Me.SafetyIndicatorLabel.AutoSize = True
+        Me.SafetyIndicatorLabel.Location = New System.Drawing.Point(429, 218)
+        Me.SafetyIndicatorLabel.Name = "SafetyIndicatorLabel"
+        Me.SafetyIndicatorLabel.Size = New System.Drawing.Size(121, 20)
+        Me.SafetyIndicatorLabel.TabIndex = 22
+        Me.SafetyIndicatorLabel.Text = "Saftey Indicator"
         '
         'HVACControllerForm
         '
@@ -654,6 +798,8 @@ Partial Class HVACControllerForm
         Me.ThermostatGroupBox.PerformLayout()
         Me.TestGroupBox.ResumeLayout(False)
         Me.TestGroupBox.PerformLayout()
+        Me.DOutGroupBox.ResumeLayout(False)
+        Me.DOutGroupBox.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.ResumeLayout(False)
@@ -720,4 +866,17 @@ Partial Class HVACControllerForm
     Friend WithEvents DigIn8Label As Label
     Friend WithEvents DigOut8Label As Label
     Friend WithEvents DigOut7Label As Label
+    Friend WithEvents DOutGroupBox As GroupBox
+    Friend WithEvents DO5CheckBox As CheckBox
+    Friend WithEvents DO6CheckBox As CheckBox
+    Friend WithEvents DO7CheckBox As CheckBox
+    Friend WithEvents DO8CheckBox As CheckBox
+    Friend WithEvents DO4CheckBox As CheckBox
+    Friend WithEvents DO3CheckBox As CheckBox
+    Friend WithEvents DO2CheckBox As CheckBox
+    Friend WithEvents DO1CheckBox As CheckBox
+    Friend WithEvents Test1Button As Button
+    Friend WithEvents Test2Button As Button
+    Friend WithEvents Test3Button As Button
+    Friend WithEvents SafetyIndicatorLabel As Label
 End Class
