@@ -27,6 +27,9 @@ Public Class HVACControllerForm
     Dim baud As String                          'Set baud rate
     Dim txCount As Integer
     Dim vOut As String                          'Calculated voltage in for input
+
+    Dim heatOn, heatOff, acOn, acOff As Boolean
+
     Private Sub TempUpButton_Click(sender As Object, e As EventArgs) Handles TempUpButton.Click
 
     End Sub
@@ -36,11 +39,13 @@ Public Class HVACControllerForm
     End Sub
     '===========================================================================
     Private Sub Test3Button_Click(sender As Object, e As EventArgs) Handles Test3Button.Click
+
         Delay()
     End Sub
 
     Private Sub Test2Button_Click(sender As Object, e As EventArgs) Handles Test2Button.Click
         'Interlock()
+
     End Sub
 
     '==============================================================================
@@ -66,37 +71,61 @@ Public Class HVACControllerForm
     'TODO 1) file / error report???
     'Sub-
     Sub Heater()
+
         If HeaterIndicatorLabel.Visible = True Then
             HeaterStatusLabel.Text = "Heater On"
-            'TXdata(0) = 32                                 'Command byte 1 for digital outputs
-            'TXdata(1) = 8                              'Command byte 2 for digital output 1
-            'TXdata(2) = 0
-            'SendData()
-            'Delay()
+            If heatOn = True Then
+                SetFan()
+                'airpressure
+                heatOn = False
+
+            End If
+
             HeaterIndicatorLabel.Text = "Heating"
             HeaterIndicatorLabel.BackColor = Color.FromArgb(255, 0, 10)
+            'FanIndicatorLabel.BackColor = Color.FromArgb(150, 230, 10)  'no work
+            'Turns on fan and heater (2+8)
             TXdata(0) = 32                                 'Command byte 1 for digital outputs
-            TXdata(1) = 2                              'Command byte 2 for digital output 1
-            TXdata(2) = 0
-            SendData()
+                TXdata(1) = 10                              'Command byte 2 for digital output 1
+                TXdata(2) = 0
+                SendData()
+            heatOff = True
+
         ElseIf HeaterIndicatorLabel.Visible = False Then
-            HeaterStatusLabel.Text = "Heater Off"
-        End If
+                HeaterStatusLabel.Text = "Heater Off"
+            If heatOff = True Then
+                SetFan()
+                heatOff = False
+            End If
+            heatOn = True
+            End If
     End Sub
 
     Sub AC()
         If ACIndicatorLabel.Visible = True Then
             ACStatusLabel.Text = "AC On"
-            'Prefan code here
+            If acOn = True Then
+                SetFan()
+                'air pressure
+                acOn = False
+            End If
+
             ACIndicatorLabel.Text = "Cooling"
+            'Turns on fan and heater (2+8)
             ACIndicatorLabel.BackColor = Color.FromArgb(100, 100, 255)
+            'FanIndicatorLabel.BackColor = Color.FromArgb(150, 230, 10)  'no work
             TXdata(0) = 32                                 'Command byte 1 for digital outputs
-            TXdata(1) = 4                              'Command byte 2 for digital output 1
+            TXdata(1) = 12                              'Command byte 2 for digital output 1
             TXdata(2) = 0
             SendData()
-            'post fan code here
+            acOff = True
         ElseIf ACIndicatorLabel.Visible = False Then
             ACStatusLabel.Text = "AC Off"
+            If acOff = True Then
+                SetFan()
+                acOff = False
+            End If
+            acOn = True
         End If
     End Sub
 
@@ -136,6 +165,16 @@ Public Class HVACControllerForm
     Sub Delay()
         Threading.Thread.Sleep(5000)
     End Sub
+
+    'Sub - Turns on fan (Digital out 4) adn pauses program for 5 seconds.
+    Sub SetFan()
+        TXdata(0) = 32                                 'Command byte 1 for digital outputs
+        TXdata(1) = 8                              'Command byte 2 for digital output 1
+        TXdata(2) = 0
+        SendData()
+        Threading.Thread.Sleep(5000)
+    End Sub
+
 
 
     Sub FunctionLoad()
