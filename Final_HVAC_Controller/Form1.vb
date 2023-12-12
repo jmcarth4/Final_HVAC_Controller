@@ -28,7 +28,7 @@ Public Class HVACControllerForm
     Dim txCount As Integer
     Dim vOut As String                          'Calculated voltage in for input
 
-    Dim heatOn, heatOff, acOn, acOff As Boolean
+    Dim lockOn, lockOff, heatOn, heatOff, acOn, acOff As Boolean
 
     Private Sub TempUpButton_Click(sender As Object, e As EventArgs) Handles TempUpButton.Click
 
@@ -55,6 +55,20 @@ Public Class HVACControllerForm
     'Sub - 
     Sub Interlock()
         If SafetyIndicatorLabel.Visible = True Then
+            If lockOn = True Then
+                'Error file sub
+                'message box
+                'MsgBox("WARNING!!!!!!! Safety Tripped! All systems disabled")
+                'shut down sub
+                ' lockOff = True  for file stuff
+                TXdata(0) = 32                     'test input  see if read code          
+                TXdata(1) = 255
+                TXdata(2) = 0
+                SendData()
+                Delay()                             'testing test
+
+                lockOn = False
+            End If
             SafetyIndicatorLabel.BackColor = Color.FromArgb(200, 150, 10)
             'MsgBox("WARNING!!!!!!! Safety Tripped! All systems disabled")
             TXdata(0) = 32                                 'Command byte 1 for digital outputs
@@ -63,11 +77,13 @@ Public Class HVACControllerForm
             SendData()
             'Stop all functions
             'Disable all functions until interlock is reset
+        ElseIf SafetyIndicatorLabel.Visible = False Then
+            lockOn = True
         End If
+
     End Sub
 
-    'TODO 1) pre fan
-    'TODO 2) post fan
+
     'TODO 1) file / error report???
     'Sub-
     Sub Heater()
@@ -129,7 +145,7 @@ Public Class HVACControllerForm
         End If
     End Sub
 
-    'Sub
+    'Sub -
     Sub FanOnly()
         If FanIndicatorLabel.Visible = True Then
             FanStatusLabel.Text = "Fan On"
@@ -145,7 +161,7 @@ Public Class HVACControllerForm
         End If
     End Sub
 
-    'Sub
+    'Sub -
     Sub Pressure()
         If PressureIndicatorLabel.Visible = True Then
             PressureStatusLabel.Text = "Pressure Error"
@@ -163,7 +179,8 @@ Public Class HVACControllerForm
 
     'Sub - Pauses program for 5 seconds
     Sub Delay()
-        Threading.Thread.Sleep(5000)
+        ' Threading.Thread.Sleep(5000)
+        Threading.Thread.Sleep(1000)
     End Sub
 
     'Sub - Turns on fan (Digital out 4) adn pauses program for 5 seconds.
