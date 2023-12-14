@@ -285,8 +285,7 @@ Public Class HVACControllerForm
     End Sub
 
     Sub FunctionLoad()
-        LoadLabel.Text = " "
-        LoadLabel.BackColor = Color.FromArgb(150, 0, 0)
+
         Load1Label.Text = " "
         Load2Label.Text = " "
         Load1Label.BackColor = Color.FromArgb(150, 0, 0)
@@ -819,7 +818,7 @@ Public Class HVACControllerForm
         Catch ex As Exception
 
         End Try
-        ConnectButton.Text = "Connect"
+        ConnectSystemToolStripMenuItem.Text = "Connect"
         portState = False
 
         SerialPort1.BaudRate = CInt(baud)                         'See if baud rate data is in the list box
@@ -828,16 +827,16 @@ Public Class HVACControllerForm
 
 
     Private Sub ConnectSystemToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConnectSystemToolStripMenuItem.Click
-        If ConnectButton.Text = "Connect" Then           'Com port is disconnected. Press button to connect.
+        If ConnectSystemToolStripMenuItem.Text = "Connect" Then           'Com port is disconnected. Press button to connect.
             Try
                 SerialPort1.Open()
-                ConnectButton.Text = "Disconnect"        'Displays that com port is connected
+                ConnectSystemToolStripMenuItem.Text = "Disconnect"        'Displays that com port is connected
                 ConnectLabel.Text = "Power"
                 ConnectLabel.BackColor = Color.FromArgb(0, 150, 0)
                 portState = True                                    'To disconnect press button again
             Catch ex As Exception
                 MsgBox("Port Already Open or Port Unavailable")     'Com port is disconnected. Press button to connect.
-                ConnectButton.Text = "Connect"
+                ConnectSystemToolStripMenuItem.Text = "Connect"
                 ConnectLabel.Text = "No Power"
                 ConnectLabel.BackColor = Color.FromArgb(150, 0, 0)
                 portState = False
@@ -849,7 +848,7 @@ Public Class HVACControllerForm
 
             End Try
             portState = False
-            ConnectButton.Text = "Connect"
+            ConnectSystemToolStripMenuItem.Text = "Connect"
         End If
     End Sub
 

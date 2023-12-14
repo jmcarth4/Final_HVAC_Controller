@@ -31,9 +31,9 @@ Partial Class HVACControllerForm
         Me.SelectBaudRateToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.BaudRateComboBox = New System.Windows.Forms.ToolStripComboBox()
         Me.SaveSettingsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.LoadToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ConnectSystemToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ThermostatGroupBox = New System.Windows.Forms.GroupBox()
         Me.Load2Label = New System.Windows.Forms.Label()
         Me.Load1Label = New System.Windows.Forms.Label()
@@ -112,7 +112,6 @@ Partial Class HVACControllerForm
         '
         'SerialSettingsMenuStrip
         '
-        Me.SerialSettingsMenuStrip.GripMargin = New System.Windows.Forms.Padding(2, 2, 0, 2)
         Me.SerialSettingsMenuStrip.ImageScalingSize = New System.Drawing.Size(24, 24)
         Me.SerialSettingsMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SetSettingsToolStripMenuItem})
         Me.SerialSettingsMenuStrip.Location = New System.Drawing.Point(0, 0)
@@ -132,7 +131,7 @@ Partial Class HVACControllerForm
         '
         Me.SetSerialSettingsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SelectSerialPortToolStripMenuItem, Me.SelectBaudRateToolStripMenuItem})
         Me.SetSerialSettingsToolStripMenuItem.Name = "SetSerialSettingsToolStripMenuItem"
-        Me.SetSerialSettingsToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
+        Me.SetSerialSettingsToolStripMenuItem.Size = New System.Drawing.Size(255, 34)
         Me.SetSerialSettingsToolStripMenuItem.Text = "Set Serial Settings"
         '
         'SelectSerialPortToolStripMenuItem
@@ -164,26 +163,26 @@ Partial Class HVACControllerForm
         'SaveSettingsToolStripMenuItem
         '
         Me.SaveSettingsToolStripMenuItem.Name = "SaveSettingsToolStripMenuItem"
-        Me.SaveSettingsToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
+        Me.SaveSettingsToolStripMenuItem.Size = New System.Drawing.Size(255, 34)
         Me.SaveSettingsToolStripMenuItem.Text = "Save Settings"
-        '
-        'ExitToolStripMenuItem
-        '
-        Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
-        Me.ExitToolStripMenuItem.Text = "Exit "
         '
         'LoadToolStripMenuItem
         '
         Me.LoadToolStripMenuItem.Name = "LoadToolStripMenuItem"
-        Me.LoadToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
+        Me.LoadToolStripMenuItem.Size = New System.Drawing.Size(255, 34)
         Me.LoadToolStripMenuItem.Text = " Load Settings"
         '
         'ConnectSystemToolStripMenuItem
         '
         Me.ConnectSystemToolStripMenuItem.Name = "ConnectSystemToolStripMenuItem"
-        Me.ConnectSystemToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
+        Me.ConnectSystemToolStripMenuItem.Size = New System.Drawing.Size(255, 34)
         Me.ConnectSystemToolStripMenuItem.Text = "Connect System"
+        '
+        'ExitToolStripMenuItem
+        '
+        Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(255, 34)
+        Me.ExitToolStripMenuItem.Text = "Exit "
         '
         'ThermostatGroupBox
         '
@@ -772,15 +771,17 @@ Partial Class HVACControllerForm
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.LoadButton)
+        Me.GroupBox1.Controls.Add(Me.ConnectButton)
         Me.GroupBox1.Controls.Add(Me.Test1Button)
         Me.GroupBox1.Controls.Add(Me.Test2Button)
         Me.GroupBox1.Controls.Add(Me.Test3Button)
         Me.GroupBox1.Controls.Add(Me.ExitButton)
         Me.GroupBox1.Controls.Add(Me.label1)
         Me.GroupBox1.Controls.Add(Me.label15)
-        Me.GroupBox1.Location = New System.Drawing.Point(809, 336)
+        Me.GroupBox1.Location = New System.Drawing.Point(669, 333)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(265, 240)
+        Me.GroupBox1.Size = New System.Drawing.Size(366, 245)
         Me.GroupBox1.TabIndex = 35
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "GroupBox1"
@@ -814,7 +815,7 @@ Partial Class HVACControllerForm
         '
         'ExitButton
         '
-        Me.ExitButton.Location = New System.Drawing.Point(102, 204)
+        Me.ExitButton.Location = New System.Drawing.Point(193, 149)
         Me.ExitButton.Name = "ExitButton"
         Me.ExitButton.Size = New System.Drawing.Size(151, 30)
         Me.ExitButton.TabIndex = 37
@@ -831,7 +832,7 @@ Partial Class HVACControllerForm
         '
         'LoadButton
         '
-        Me.LoadButton.Location = New System.Drawing.Point(896, 74)
+        Me.LoadButton.Location = New System.Drawing.Point(193, 43)
         Me.LoadButton.Name = "LoadButton"
         Me.LoadButton.Size = New System.Drawing.Size(151, 30)
         Me.LoadButton.TabIndex = 22
@@ -840,7 +841,7 @@ Partial Class HVACControllerForm
         '
         'ConnectButton
         '
-        Me.ConnectButton.Location = New System.Drawing.Point(896, 124)
+        Me.ConnectButton.Location = New System.Drawing.Point(193, 98)
         Me.ConnectButton.Name = "ConnectButton"
         Me.ConnectButton.Size = New System.Drawing.Size(151, 30)
         Me.ConnectButton.TabIndex = 36
@@ -852,8 +853,6 @@ Partial Class HVACControllerForm
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1074, 618)
-        Me.Controls.Add(Me.ConnectButton)
-        Me.Controls.Add(Me.LoadButton)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.TestGroupBox)
         Me.Controls.Add(Me.ThermostatGroupBox)
