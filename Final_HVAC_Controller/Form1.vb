@@ -39,7 +39,7 @@ Public Class HVACControllerForm
     End Sub
     '===========================================================================
     Private Sub Test3Button_Click(sender As Object, e As EventArgs) Handles Test3Button.Click
-
+        DisableUnit()
         Delay()
     End Sub
 
@@ -49,7 +49,9 @@ Public Class HVACControllerForm
     End Sub
 
     Private Sub Test1Button_Click(sender As Object, e As EventArgs) Handles Test1Button.Click
-
+        DisableUnit()
+        FileLog()
+        Delay()
     End Sub
 
     '==============================================================================
@@ -148,32 +150,23 @@ Public Class HVACControllerForm
         End If
     End Sub
 
-
-    'TODO - 1)stop all functions
-    'TODO - 2)disable all functions til system is reset
-    'TODO - 3)Error message display once
     'Sub - 
     Sub Interlock()
         If SafetyIndicatorLabel.Visible = True Then
             If lockOn = True Then
-                'Error file sub
-                'message box
-                'MsgBox("WARNING!!!!!!! Safety Tripped! All systems disabled")
-                'shut down sub
-                ' lockOff = True  for file stuff
-
-                Delay()                             'testing test
-
+                SafetyIndicatorLabel.BackColor = Color.FromArgb(200, 150, 10)
+                FileLog()
+                DisableUnit()                       'Disable all functions until interlock is reset
+                MsgBox("WARNING!!!!!!! Safety Tripped! All systems disabled")
+                'lockOff = True  for file stuff
                 lockOn = False
             End If
             SafetyIndicatorLabel.BackColor = Color.FromArgb(200, 150, 10)
-            'MsgBox("WARNING!!!!!!! Safety Tripped! All systems disabled")
-            TXdata(0) = 32                                 'Command byte 1 for digital outputs
+            'Displays Safty lock tripped
+            TXdata(0) = 32                              'Command byte 1 for digital outputs
             TXdata(1) = 1                              'Command byte 2 for digital output 1
             TXdata(2) = 0
             SendData()
-            'Stop all functions
-            'Disable all functions until interlock is reset
         ElseIf SafetyIndicatorLabel.Visible = False Then
             lockOn = True
         End If
@@ -202,7 +195,33 @@ Public Class HVACControllerForm
         Threading.Thread.Sleep(5000)
     End Sub
 
+    'Sub - Logs error to system file
+    Sub FileLog()
+        Dim dateStamp As String
 
+        dateStamp = CStr(Now)
+        drivePath = CurDir()
+        fileName = drivePath & "\HVACSystemLog.txt"
+
+        Try
+            FileOpen(2, fileName, OpenMode.Append)                                'Open file for write
+        Catch ex As Exception
+            MsgBox("File failed to open")
+            Exit Sub
+        End Try
+
+        WriteLine(2, "Interlock Set" & " " & dateStamp) 'Write file
+        FileClose(2)
+    End Sub
+
+    Sub DisableUnit()
+        HeaterIndicatorLabel.Visible = False
+        ACIndicatorLabel.Visible = False
+        FanIndicatorLabel.Visible = False
+        Timer1.Enabled = False
+
+        'Me.Close()
+    End Sub
 
     Sub FunctionLoad()
         LoadLabel.Text = " "
@@ -570,7 +589,7 @@ Public Class HVACControllerForm
     'Sub - Loads and reads com port settings file
     Public Sub Load_setting()
         drivePath = CurDir()
-        fileName = drivePath & "\ScopeSettings.txt"               'File found in debug folder of project
+        fileName = drivePath & "\HVACSettings.txt"               'File found in debug folder of project
         Try
             FileOpen(1, fileName, OpenMode.Input)                 'Open file for read
         Catch ex As Exception

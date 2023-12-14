@@ -33,6 +33,8 @@ Partial Class HVACControllerForm
         Me.SaveSettingsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ThermostatGroupBox = New System.Windows.Forms.GroupBox()
+        Me.LoadLabel = New System.Windows.Forms.Label()
+        Me.ConnectLabel = New System.Windows.Forms.Label()
         Me.SafetyIndicatorLabel = New System.Windows.Forms.Label()
         Me.HeatSetTempTextBox = New System.Windows.Forms.TextBox()
         Me.ColdSetTempTextBox = New System.Windows.Forms.TextBox()
@@ -96,8 +98,6 @@ Partial Class HVACControllerForm
         Me.label1 = New System.Windows.Forms.Label()
         Me.LoadButton = New System.Windows.Forms.Button()
         Me.ConnectButton = New System.Windows.Forms.Button()
-        Me.ConnectLabel = New System.Windows.Forms.Label()
-        Me.LoadLabel = New System.Windows.Forms.Label()
         Me.Load2Label = New System.Windows.Forms.Label()
         Me.Load1Label = New System.Windows.Forms.Label()
         Me.SerialSettingsMenuStrip.SuspendLayout()
@@ -199,6 +199,24 @@ Partial Class HVACControllerForm
         Me.ThermostatGroupBox.TabIndex = 2
         Me.ThermostatGroupBox.TabStop = False
         Me.ThermostatGroupBox.Text = "Thermostat GroupBox"
+        '
+        'LoadLabel
+        '
+        Me.LoadLabel.AutoSize = True
+        Me.LoadLabel.Location = New System.Drawing.Point(540, 20)
+        Me.LoadLabel.Name = "LoadLabel"
+        Me.LoadLabel.Size = New System.Drawing.Size(96, 20)
+        Me.LoadLabel.TabIndex = 42
+        Me.LoadLabel.Text = "Load Status"
+        '
+        'ConnectLabel
+        '
+        Me.ConnectLabel.AutoSize = True
+        Me.ConnectLabel.Location = New System.Drawing.Point(687, 20)
+        Me.ConnectLabel.Name = "ConnectLabel"
+        Me.ConnectLabel.Size = New System.Drawing.Size(141, 20)
+        Me.ConnectLabel.TabIndex = 41
+        Me.ConnectLabel.Text = "Connection Status"
         '
         'SafetyIndicatorLabel
         '
@@ -783,24 +801,6 @@ Partial Class HVACControllerForm
         Me.ConnectButton.TabIndex = 36
         Me.ConnectButton.Text = "Connect"
         Me.ConnectButton.UseVisualStyleBackColor = True
-        '
-        'ConnectLabel
-        '
-        Me.ConnectLabel.AutoSize = True
-        Me.ConnectLabel.Location = New System.Drawing.Point(687, 20)
-        Me.ConnectLabel.Name = "ConnectLabel"
-        Me.ConnectLabel.Size = New System.Drawing.Size(141, 20)
-        Me.ConnectLabel.TabIndex = 41
-        Me.ConnectLabel.Text = "Connection Status"
-        '
-        'LoadLabel
-        '
-        Me.LoadLabel.AutoSize = True
-        Me.LoadLabel.Location = New System.Drawing.Point(540, 20)
-        Me.LoadLabel.Name = "LoadLabel"
-        Me.LoadLabel.Size = New System.Drawing.Size(96, 20)
-        Me.LoadLabel.TabIndex = 42
-        Me.LoadLabel.Text = "Load Status"
         '
         'Load2Label
         '
