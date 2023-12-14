@@ -3,15 +3,14 @@ Option Explicit On
 
 'TODO
 
-'DONE ----2)Serial port connect and file save - hw graph temp 
-'2.5) Serial setting load automatcally?????? 
-'DONE ----3)talk to qy@ board - hw qy@ board
-'4) Heater  - input, outputs, indicators, mode on, timer(s)
-'5) AC
-'6) fan
+
+
+' set temp 
+
+
 '7) Pressure
-'8) stop botton
-'9) Error file
+
+
 '10) font
 '11) indicators ????
 
@@ -28,8 +27,8 @@ Public Class HVACControllerForm
     Dim txCount As Integer
     Dim vOut As String                          'Calculated voltage in for input
 
-    Dim lockOn, lockOff, heatOn, heatOff, acOn, acOff As Boolean
-
+    Dim safetyLockOn, heatOn, heatOff, acOn, acOff As Boolean
+    Dim logSafetyLock, logFanError As Boolean
     Private Sub TempUpButton_Click(sender As Object, e As EventArgs) Handles TempUpButton.Click
 
     End Sub
@@ -49,9 +48,9 @@ Public Class HVACControllerForm
     End Sub
 
     Private Sub Test1Button_Click(sender As Object, e As EventArgs) Handles Test1Button.Click
-        DisableUnit()
-        FileLog()
-        Delay()
+
+
+
     End Sub
 
     '==============================================================================
@@ -66,6 +65,7 @@ Public Class HVACControllerForm
             If heatOn = True Then
                 SetFan()
                 'airpressure
+                'Pressure()
                 heatOn = False
 
             End If
@@ -96,6 +96,7 @@ Public Class HVACControllerForm
             If acOn = True Then
                 SetFan()
                 'air pressure
+                'Pressure()
                 acOn = False
             End If
 
@@ -134,43 +135,49 @@ Public Class HVACControllerForm
         End If
     End Sub
 
+    'DOTO???FAN ?????????????
+    'no indicator????????????????
+    'not work well with other programs
     'Sub -
     Sub Pressure()
+        '?????? fan stuff
         If PressureIndicatorLabel.Visible = True Then
-            PressureStatusLabel.Text = "Pressure Error"
-
+            PressureStatusLabel.Text = "Reading Pressure "
+            Exit Sub
+        ElseIf PressureIndicatorLabel.Visible = False Then
             PressureIndicatorLabel.Text = "Error"
             PressureIndicatorLabel.BackColor = Color.FromArgb(190, 50, 190)
-            TXdata(0) = 32                                 'Command byte 1 for digital outputs
-            TXdata(1) = 128                              'Command byte 2 for digital output 1
-            TXdata(2) = 0
-            SendData()
-        ElseIf PressureIndicatorLabel.Visible = False Then
-            PressureStatusLabel.Text = "Reading Pressure"
+            'TXdata(0) = 32                                 'Command byte 1 for digital outputs
+            'TXdata(1) = 128                              'Command byte 2 for digital output 1
+            'TXdata(2) = 0
+            'SendData()
+
+            PressureStatusLabel.Text = "Pressure Error"
+            logFanError = True
+            FileLog()
         End If
     End Sub
 
-    'Sub - 
+    'Sub - 'Disable all functions until interlock is reset
     Sub Interlock()
         If SafetyIndicatorLabel.Visible = True Then
-            If lockOn = True Then
+            If safetyLockOn = True Then
                 SafetyIndicatorLabel.BackColor = Color.FromArgb(200, 150, 10)
-                FileLog()
+                FileLog()                           'Logs safety lock in system log
                 DisableUnit()                       'Disable all functions until interlock is reset
                 MsgBox("WARNING!!!!!!! Safety Tripped! All systems disabled")
-                'lockOff = True  for file stuff
-                lockOn = False
+                logSafetyLock = True ' for file stuff
+                safetyLockOn = False
             End If
             SafetyIndicatorLabel.BackColor = Color.FromArgb(200, 150, 10)
-            'Displays Safty lock tripped
+            'Displays Safty lock on
             TXdata(0) = 32                              'Command byte 1 for digital outputs
             TXdata(1) = 1                              'Command byte 2 for digital output 1
             TXdata(2) = 0
             SendData()
         ElseIf SafetyIndicatorLabel.Visible = False Then
-            lockOn = True
+            safetyLockOn = True
         End If
-
     End Sub
 
 
@@ -210,7 +217,14 @@ Public Class HVACControllerForm
             Exit Sub
         End Try
 
-        WriteLine(2, "Interlock Set" & " " & dateStamp) 'Write file
+        If logSafetyLock = True Then
+            WriteLine(2, "Interlock Set" & " " & dateStamp) 'Write file
+            logSafetyLock = False
+        ElseIf logFanError = True Then
+            WriteLine(2, "Fan Error" & " " & dateStamp) 'Write file
+            logFanError = False
+        End If
+
         FileClose(2)
     End Sub
 
@@ -272,7 +286,7 @@ Public Class HVACControllerForm
             Heater()
             AC()
             FanOnly()
-            Pressure()
+
         End If
 
         ReceiveData()
