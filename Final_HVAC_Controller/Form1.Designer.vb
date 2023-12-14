@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class HVACControllerForm
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class HVACControllerForm
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Me.SerialSettingsMenuStrip = New System.Windows.Forms.MenuStrip()
@@ -32,10 +32,13 @@ Partial Class HVACControllerForm
         Me.BaudRateComboBox = New System.Windows.Forms.ToolStripComboBox()
         Me.SaveSettingsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.LoadToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ConnectSystemToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ThermostatGroupBox = New System.Windows.Forms.GroupBox()
+        Me.Load2Label = New System.Windows.Forms.Label()
+        Me.Load1Label = New System.Windows.Forms.Label()
         Me.HeTempDownButton = New System.Windows.Forms.Button()
         Me.HeTempUpButton = New System.Windows.Forms.Button()
-        Me.LoadLabel = New System.Windows.Forms.Label()
         Me.ConnectLabel = New System.Windows.Forms.Label()
         Me.SafetyIndicatorLabel = New System.Windows.Forms.Label()
         Me.HeatSetTempTextBox = New System.Windows.Forms.TextBox()
@@ -100,9 +103,6 @@ Partial Class HVACControllerForm
         Me.label1 = New System.Windows.Forms.Label()
         Me.LoadButton = New System.Windows.Forms.Button()
         Me.ConnectButton = New System.Windows.Forms.Button()
-        Me.Load2Label = New System.Windows.Forms.Label()
-        Me.Load1Label = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
         Me.SerialSettingsMenuStrip.SuspendLayout()
         Me.ThermostatGroupBox.SuspendLayout()
         Me.TestGroupBox.SuspendLayout()
@@ -123,7 +123,7 @@ Partial Class HVACControllerForm
         '
         'SetSettingsToolStripMenuItem
         '
-        Me.SetSettingsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SetSerialSettingsToolStripMenuItem, Me.SaveSettingsToolStripMenuItem, Me.ExitToolStripMenuItem})
+        Me.SetSettingsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SetSerialSettingsToolStripMenuItem, Me.SaveSettingsToolStripMenuItem, Me.LoadToolStripMenuItem, Me.ConnectSystemToolStripMenuItem, Me.ExitToolStripMenuItem})
         Me.SetSettingsToolStripMenuItem.Name = "SetSettingsToolStripMenuItem"
         Me.SetSettingsToolStripMenuItem.Size = New System.Drawing.Size(92, 29)
         Me.SetSettingsToolStripMenuItem.Text = "Settings"
@@ -132,7 +132,7 @@ Partial Class HVACControllerForm
         '
         Me.SetSerialSettingsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SelectSerialPortToolStripMenuItem, Me.SelectBaudRateToolStripMenuItem})
         Me.SetSerialSettingsToolStripMenuItem.Name = "SetSerialSettingsToolStripMenuItem"
-        Me.SetSerialSettingsToolStripMenuItem.Size = New System.Drawing.Size(255, 34)
+        Me.SetSerialSettingsToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
         Me.SetSerialSettingsToolStripMenuItem.Text = "Set Serial Settings"
         '
         'SelectSerialPortToolStripMenuItem
@@ -164,21 +164,33 @@ Partial Class HVACControllerForm
         'SaveSettingsToolStripMenuItem
         '
         Me.SaveSettingsToolStripMenuItem.Name = "SaveSettingsToolStripMenuItem"
-        Me.SaveSettingsToolStripMenuItem.Size = New System.Drawing.Size(255, 34)
+        Me.SaveSettingsToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
         Me.SaveSettingsToolStripMenuItem.Text = "Save Settings"
         '
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(255, 34)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
         Me.ExitToolStripMenuItem.Text = "Exit "
+        '
+        'LoadToolStripMenuItem
+        '
+        Me.LoadToolStripMenuItem.Name = "LoadToolStripMenuItem"
+        Me.LoadToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
+        Me.LoadToolStripMenuItem.Text = " Load Settings"
+        '
+        'ConnectSystemToolStripMenuItem
+        '
+        Me.ConnectSystemToolStripMenuItem.Name = "ConnectSystemToolStripMenuItem"
+        Me.ConnectSystemToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
+        Me.ConnectSystemToolStripMenuItem.Text = "Connect System"
         '
         'ThermostatGroupBox
         '
-        Me.ThermostatGroupBox.Controls.Add(Me.Label2)
+        Me.ThermostatGroupBox.Controls.Add(Me.Load2Label)
+        Me.ThermostatGroupBox.Controls.Add(Me.Load1Label)
         Me.ThermostatGroupBox.Controls.Add(Me.HeTempDownButton)
         Me.ThermostatGroupBox.Controls.Add(Me.HeTempUpButton)
-        Me.ThermostatGroupBox.Controls.Add(Me.LoadLabel)
         Me.ThermostatGroupBox.Controls.Add(Me.ConnectLabel)
         Me.ThermostatGroupBox.Controls.Add(Me.SafetyIndicatorLabel)
         Me.ThermostatGroupBox.Controls.Add(Me.HeatSetTempTextBox)
@@ -206,41 +218,50 @@ Partial Class HVACControllerForm
         Me.ThermostatGroupBox.TabStop = False
         Me.ThermostatGroupBox.Text = "Thermostat GroupBox"
         '
+        'Load2Label
+        '
+        Me.Load2Label.AutoSize = True
+        Me.Load2Label.Location = New System.Drawing.Point(583, 15)
+        Me.Load2Label.Name = "Load2Label"
+        Me.Load2Label.Size = New System.Drawing.Size(82, 20)
+        Me.Load2Label.TabIndex = 57
+        Me.Load2Label.Text = "Serial Port"
+        '
+        'Load1Label
+        '
+        Me.Load1Label.AutoSize = True
+        Me.Load1Label.Location = New System.Drawing.Point(671, 20)
+        Me.Load1Label.Name = "Load1Label"
+        Me.Load1Label.Size = New System.Drawing.Size(86, 20)
+        Me.Load1Label.TabIndex = 57
+        Me.Load1Label.Text = "Baud Rate"
+        '
         'HeTempDownButton
         '
-        Me.HeTempDownButton.Location = New System.Drawing.Point(626, 118)
+        Me.HeTempDownButton.Location = New System.Drawing.Point(626, 141)
         Me.HeTempDownButton.Name = "HeTempDownButton"
-        Me.HeTempDownButton.Size = New System.Drawing.Size(82, 37)
+        Me.HeTempDownButton.Size = New System.Drawing.Size(82, 67)
         Me.HeTempDownButton.TabIndex = 44
-        Me.HeTempDownButton.Text = "Down"
+        Me.HeTempDownButton.Text = "Heater Down"
         Me.HeTempDownButton.UseVisualStyleBackColor = True
         '
         'HeTempUpButton
         '
-        Me.HeTempUpButton.Location = New System.Drawing.Point(626, 70)
+        Me.HeTempUpButton.Location = New System.Drawing.Point(626, 65)
         Me.HeTempUpButton.Name = "HeTempUpButton"
-        Me.HeTempUpButton.Size = New System.Drawing.Size(82, 30)
+        Me.HeTempUpButton.Size = New System.Drawing.Size(82, 57)
         Me.HeTempUpButton.TabIndex = 43
-        Me.HeTempUpButton.Text = "Up"
+        Me.HeTempUpButton.Text = "Heater Up"
         Me.HeTempUpButton.UseVisualStyleBackColor = True
-        '
-        'LoadLabel
-        '
-        Me.LoadLabel.AutoSize = True
-        Me.LoadLabel.Location = New System.Drawing.Point(540, 20)
-        Me.LoadLabel.Name = "LoadLabel"
-        Me.LoadLabel.Size = New System.Drawing.Size(96, 20)
-        Me.LoadLabel.TabIndex = 42
-        Me.LoadLabel.Text = "Load Status"
         '
         'ConnectLabel
         '
         Me.ConnectLabel.AutoSize = True
-        Me.ConnectLabel.Location = New System.Drawing.Point(687, 20)
+        Me.ConnectLabel.Location = New System.Drawing.Point(775, 25)
         Me.ConnectLabel.Name = "ConnectLabel"
-        Me.ConnectLabel.Size = New System.Drawing.Size(141, 20)
+        Me.ConnectLabel.Size = New System.Drawing.Size(60, 20)
         Me.ConnectLabel.TabIndex = 41
-        Me.ConnectLabel.Text = "Connection Status"
+        Me.ConnectLabel.Text = "Consta"
         '
         'SafetyIndicatorLabel
         '
@@ -271,16 +292,16 @@ Partial Class HVACControllerForm
         Me.ACTempDownButton.Name = "ACTempDownButton"
         Me.ACTempDownButton.Size = New System.Drawing.Size(82, 37)
         Me.ACTempDownButton.TabIndex = 1
-        Me.ACTempDownButton.Text = "Down"
+        Me.ACTempDownButton.Text = "AC Down"
         Me.ACTempDownButton.UseVisualStyleBackColor = True
         '
         'ACTempUpButton
         '
-        Me.ACTempUpButton.Location = New System.Drawing.Point(517, 70)
+        Me.ACTempUpButton.Location = New System.Drawing.Point(517, 65)
         Me.ACTempUpButton.Name = "ACTempUpButton"
-        Me.ACTempUpButton.Size = New System.Drawing.Size(82, 30)
+        Me.ACTempUpButton.Size = New System.Drawing.Size(82, 35)
         Me.ACTempUpButton.TabIndex = 0
-        Me.ACTempUpButton.Text = "Up"
+        Me.ACTempUpButton.Text = "AC Up"
         Me.ACTempUpButton.UseVisualStyleBackColor = True
         '
         'DayLabel
@@ -304,25 +325,25 @@ Partial Class HVACControllerForm
         'HeatSetTempLabel
         '
         Me.HeatSetTempLabel.AutoSize = True
-        Me.HeatSetTempLabel.Location = New System.Drawing.Point(751, 54)
+        Me.HeatSetTempLabel.Location = New System.Drawing.Point(729, 55)
         Me.HeatSetTempLabel.Name = "HeatSetTempLabel"
-        Me.HeatSetTempLabel.Size = New System.Drawing.Size(58, 20)
+        Me.HeatSetTempLabel.Size = New System.Drawing.Size(106, 20)
         Me.HeatSetTempLabel.TabIndex = 9
-        Me.HeatSetTempLabel.Text = "Heater"
+        Me.HeatSetTempLabel.Text = "Heater set to:"
         '
         'ColdSetTempLabel
         '
         Me.ColdSetTempLabel.AutoSize = True
         Me.ColdSetTempLabel.Location = New System.Drawing.Point(397, 38)
         Me.ColdSetTempLabel.Name = "ColdSetTempLabel"
-        Me.ColdSetTempLabel.Size = New System.Drawing.Size(83, 20)
+        Me.ColdSetTempLabel.Size = New System.Drawing.Size(79, 20)
         Me.ColdSetTempLabel.TabIndex = 8
-        Me.ColdSetTempLabel.Text = "AC setting"
+        Me.ColdSetTempLabel.Text = "AC set to:"
         '
         'CurrentTempLabel
         '
         Me.CurrentTempLabel.AutoSize = True
-        Me.CurrentTempLabel.Location = New System.Drawing.Point(89, 38)
+        Me.CurrentTempLabel.Location = New System.Drawing.Point(104, 38)
         Me.CurrentTempLabel.Name = "CurrentTempLabel"
         Me.CurrentTempLabel.Size = New System.Drawing.Size(106, 20)
         Me.CurrentTempLabel.TabIndex = 10
@@ -826,40 +847,11 @@ Partial Class HVACControllerForm
         Me.ConnectButton.Text = "Connect"
         Me.ConnectButton.UseVisualStyleBackColor = True
         '
-        'Load2Label
-        '
-        Me.Load2Label.AutoSize = True
-        Me.Load2Label.Location = New System.Drawing.Point(552, 36)
-        Me.Load2Label.Name = "Load2Label"
-        Me.Load2Label.Size = New System.Drawing.Size(82, 20)
-        Me.Load2Label.TabIndex = 57
-        Me.Load2Label.Text = "Serial Port"
-        '
-        'Load1Label
-        '
-        Me.Load1Label.AutoSize = True
-        Me.Load1Label.Location = New System.Drawing.Point(646, 36)
-        Me.Load1Label.Name = "Load1Label"
-        Me.Load1Label.Size = New System.Drawing.Size(86, 20)
-        Me.Load1Label.TabIndex = 57
-        Me.Load1Label.Text = "Baud Rate"
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(507, 98)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(23, 20)
-        Me.Label2.TabIndex = 45
-        Me.Label2.Text = " F"
-        '
         'HVACControllerForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1074, 618)
-        Me.Controls.Add(Me.Load1Label)
-        Me.Controls.Add(Me.Load2Label)
         Me.Controls.Add(Me.ConnectButton)
         Me.Controls.Add(Me.LoadButton)
         Me.Controls.Add(Me.GroupBox1)
@@ -957,10 +949,10 @@ Partial Class HVACControllerForm
     Friend WithEvents Test3Button As Button
     Friend WithEvents SafetyIndicatorLabel As Label
     Friend WithEvents ConnectLabel As Label
-    Friend WithEvents LoadLabel As Label
     Friend WithEvents Load2Label As Label
     Friend WithEvents Load1Label As Label
     Friend WithEvents HeTempDownButton As Button
     Friend WithEvents HeTempUpButton As Button
-    Friend WithEvents Label2 As Label
+    Friend WithEvents LoadToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ConnectSystemToolStripMenuItem As ToolStripMenuItem
 End Class

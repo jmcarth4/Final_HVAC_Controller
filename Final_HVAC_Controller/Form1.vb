@@ -73,10 +73,10 @@ Public Class HVACControllerForm
             HeaterStatusLabel.Text = "Heater On"
             If heating = True Then
                 If heatOn = True Then
-                    ' SetFan()
+                    SetFan()
                     'airpressure
                     'Pressure()
-                    Delay()  ' faster way see if setting are read
+
                     heatOn = False
 
                 End If
@@ -94,8 +94,8 @@ Public Class HVACControllerForm
                 HeaterIndicatorLabel.Text = " "
                 HeaterIndicatorLabel.BackColor = Color.FromArgb(50, 50, 50)
                 If heatOff = True Then
-                    ' SetFan()
-                    Delay()
+                    SetFan()
+
                     heatOff = False
                 End If
                 heatOn = True
@@ -107,8 +107,8 @@ Public Class HVACControllerForm
         ElseIf HeaterIndicatorLabel.Visible = False Then
                 HeaterStatusLabel.Text = "Heater Off"
             If heatOff = True Then
-                ' SetFan()
-                Delay()
+                SetFan()
+
                 heatOff = False
             End If
             heatOn = True
@@ -120,10 +120,10 @@ Public Class HVACControllerForm
             ACStatusLabel.Text = "AC On"
             If cooling = True Then
                 If acOn = True Then
-                    ' SetFan()
+                    SetFan()
                     'air pressure
                     'Pressure()
-                    Delay()
+
                     acOn = False
                 End If
 
@@ -141,8 +141,8 @@ Public Class HVACControllerForm
                 ACIndicatorLabel.Text = " "
                 ACIndicatorLabel.BackColor = Color.FromArgb(10, 10, 10)
                 If acOff = True Then
-                    ' SetFan()
-                    Delay()
+                    SetFan()
+
                     acOff = False
                 End If
                 acOn = True
@@ -153,8 +153,8 @@ Public Class HVACControllerForm
         ElseIf ACIndicatorLabel.Visible = False Then
             ACStatusLabel.Text = "AC Off"
             If acOff = True Then
-                ' SetFan()
-                Delay()
+                SetFan()
+
                 acOff = False
             End If
             acOn = True
@@ -248,7 +248,7 @@ Public Class HVACControllerForm
         TXdata(1) = 8                              'Command byte 2 for digital output 1
         TXdata(2) = 0
         SendData()
-        Threading.Thread.Sleep(5000)
+        Threading.Thread.Sleep(1000)    ' set short for working 
     End Sub
 
     'Sub - Logs error to system file
@@ -282,8 +282,6 @@ Public Class HVACControllerForm
         ACIndicatorLabel.Visible = False
         FanIndicatorLabel.Visible = False
         Timer1.Enabled = False
-
-        'Me.Close()
     End Sub
 
     Sub FunctionLoad()
@@ -367,14 +365,14 @@ Public Class HVACControllerForm
             End If
             'Transmit and receive data from Qy@ analog input 1 
 
-
+            DigitalSelect()  '??????????????
 
             Interlock()
             ActivateSystem()
             Heater()
             AC()
             FanOnly()
-            DigitalSelect() '??????????????
+
         End If
 
         ReceiveData()
@@ -462,6 +460,8 @@ Public Class HVACControllerForm
 
     End Sub
 
+
+
     'Function - Sends byte array to serial port
     Function SendData() As Byte
         Timer1.Enabled = False                                 'Disable timer when writing to serial port
@@ -473,6 +473,8 @@ Public Class HVACControllerForm
         End If
         Timer1.Enabled = True                                   'Enable timer when done
     End Function
+
+
 
     'Sub - Asynchronous Serial receive subroutine triggered by serial receive event
     Private Sub DataReceived(sender As Object, e As EventArgs) Handles SerialPort1.DataReceived
@@ -690,7 +692,7 @@ Public Class HVACControllerForm
         TimeLabel.Text = dayTemp.ToShortTimeString
         DayLabel.Text = dayTemp.ToString("dddd")
 
-        label15.Text = CStr(Now)
+        label15.Text = CStr(Now)   'not need
     End Sub
 
     'Sub - Sets com port and baud rate 
@@ -810,7 +812,48 @@ Public Class HVACControllerForm
     End Sub
 
 
+    Private Sub LoadToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LoadToolStripMenuItem.Click
+        Load_setting()                                      'Reads file
+        Try
+            SerialPort1.Close()                             'Try to close port before change
+        Catch ex As Exception
 
+        End Try
+        ConnectButton.Text = "Connect"
+        portState = False
+
+        SerialPort1.BaudRate = CInt(baud)                         'See if baud rate data is in the list box
+        SerialPort1.PortName = port
+    End Sub
+
+
+    Private Sub ConnectSystemToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConnectSystemToolStripMenuItem.Click
+        If ConnectButton.Text = "Connect" Then           'Com port is disconnected. Press button to connect.
+            Try
+                SerialPort1.Open()
+                ConnectButton.Text = "Disconnect"        'Displays that com port is connected
+                ConnectLabel.Text = "Power"
+                ConnectLabel.BackColor = Color.FromArgb(0, 150, 0)
+                portState = True                                    'To disconnect press button again
+            Catch ex As Exception
+                MsgBox("Port Already Open or Port Unavailable")     'Com port is disconnected. Press button to connect.
+                ConnectButton.Text = "Connect"
+                ConnectLabel.Text = "No Power"
+                ConnectLabel.BackColor = Color.FromArgb(150, 0, 0)
+                portState = False
+            End Try
+        Else                                                        'Com port is disconnected. Press button to connect.
+            Try                                                     'Com port stays disconned until button is pressed
+                SerialPort1.Close()
+            Catch ex As Exception
+
+            End Try
+            portState = False
+            ConnectButton.Text = "Connect"
+        End If
+    End Sub
+
+    'not use?????
     Private Sub LoadButton_Click(sender As Object, e As EventArgs) Handles LoadButton.Click
         Load_setting()                                      'Reads file
         Try
@@ -818,8 +861,6 @@ Public Class HVACControllerForm
         Catch ex As Exception
 
         End Try
-        LoadLabel.Text = " "
-        LoadLabel.BackColor = Color.FromArgb(0, 150, 0)
         ConnectButton.Text = "Connect"
         portState = False
 
