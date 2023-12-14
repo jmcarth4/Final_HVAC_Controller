@@ -20,22 +20,19 @@ Public Class HVACControllerForm
     Public TXdata(3) As Byte                    'Byte array to transmit data to Qy@ board
     Dim newData As Integer                      'Received data
     Dim dataIn1, dataIn2, dataIn3, dataIn4, dataIn5, dataIn6, dataIn7, dataIn8 As Integer  'Processes data in
+    Dim inPut1, inPut2, inPut3, inPut4, inPut5, inPut6, inPut7, inPut8 As Integer
     Dim drivePath As String                     'Path to file
     Dim fileName As String                      'Names file for saved setting
     Dim port As String                          'Set port name
     Dim baud As String                          'Set baud rate
     Dim txCount As Integer
-    Dim vOut As String                          'Calculated voltage in for input
-
-    Dim safetyLockOn, heatOn, heatOff, acOn, acOff As Boolean
+    Dim vOut, Tempstr As String                          'Calculated voltage in for input
+    Dim readDigIn As Integer
+    Dim currentTemp, systemTemp As Double
+    Dim coldSetTemp, heatSetTemp As Double
+    Dim safetyLockOn, heatOn, heatOff, acOn, acOff, heating, cooling As Boolean
     Dim logSafetyLock, logFanError As Boolean
-    Private Sub TempUpButton_Click(sender As Object, e As EventArgs) Handles TempUpButton.Click
 
-    End Sub
-
-    Private Sub TempDownButton_Click(sender As Object, e As EventArgs) Handles TempDownButton.Click
-
-    End Sub
     '===========================================================================
     Private Sub Test3Button_Click(sender As Object, e As EventArgs) Handles Test3Button.Click
         DisableUnit()
@@ -53,6 +50,18 @@ Public Class HVACControllerForm
 
     End Sub
 
+
+
+    'Sub - Pauses program for 5 seconds
+    Sub Delay()
+        ' Threading.Thread.Sleep(5000)
+        TXdata(0) = 32                     'test input  see if read code          
+        TXdata(1) = 255
+        TXdata(2) = 0
+        SendData()
+        Threading.Thread.Sleep(1000)
+    End Sub
+
     '==============================================================================
 
 
@@ -62,28 +71,44 @@ Public Class HVACControllerForm
 
         If HeaterIndicatorLabel.Visible = True Then
             HeaterStatusLabel.Text = "Heater On"
-            If heatOn = True Then
-                SetFan()
-                'airpressure
-                'Pressure()
-                heatOn = False
+            If heating = True Then
+                If heatOn = True Then
+                    ' SetFan()
+                    'airpressure
+                    'Pressure()
+                    Delay()  ' faster way see if setting are read
+                    heatOn = False
 
-            End If
+                End If
 
-            HeaterIndicatorLabel.Text = "Heating"
-            HeaterIndicatorLabel.BackColor = Color.FromArgb(255, 0, 10)
-            'FanIndicatorLabel.BackColor = Color.FromArgb(150, 230, 10)  'no work
-            'Turns on fan and heater (2+8)
-            TXdata(0) = 32                                 'Command byte 1 for digital outputs
+                HeaterIndicatorLabel.Text = "Heating"
+                HeaterIndicatorLabel.BackColor = Color.FromArgb(255, 0, 10)
+                'FanIndicatorLabel.BackColor = Color.FromArgb(150, 230, 10)  'no work
+                'Turns on fan and heater (2+8)
+                TXdata(0) = 32                                 'Command byte 1 for digital outputs
                 TXdata(1) = 10                              'Command byte 2 for digital output 1
                 TXdata(2) = 0
                 SendData()
-            heatOff = True
+                heatOff = True
+            ElseIf heating = False Then
+                HeaterIndicatorLabel.Text = " "
+                HeaterIndicatorLabel.BackColor = Color.FromArgb(50, 50, 50)
+                If heatOff = True Then
+                    ' SetFan()
+                    Delay()
+                    heatOff = False
+                End If
+                heatOn = True
+
+
+            End If
+
 
         ElseIf HeaterIndicatorLabel.Visible = False Then
                 HeaterStatusLabel.Text = "Heater Off"
             If heatOff = True Then
-                SetFan()
+                ' SetFan()
+                Delay()
                 heatOff = False
             End If
             heatOn = True
@@ -93,26 +118,43 @@ Public Class HVACControllerForm
     Sub AC()
         If ACIndicatorLabel.Visible = True Then
             ACStatusLabel.Text = "AC On"
-            If acOn = True Then
-                SetFan()
-                'air pressure
-                'Pressure()
-                acOn = False
+            If cooling = True Then
+                If acOn = True Then
+                    ' SetFan()
+                    'air pressure
+                    'Pressure()
+                    Delay()
+                    acOn = False
+                End If
+
+                ACIndicatorLabel.Text = "Cooling"
+                'Turns on fan and heater (2+8)
+                ACIndicatorLabel.BackColor = Color.FromArgb(100, 100, 255)
+                'FanIndicatorLabel.BackColor = Color.FromArgb(150, 230, 10)  'no work
+                TXdata(0) = 32                                 'Command byte 1 for digital outputs
+                TXdata(1) = 12                              'Command byte 2 for digital output 1
+                TXdata(2) = 0
+                SendData()
+                acOff = True
+
+            ElseIf cooling = False Then
+                ACIndicatorLabel.Text = " "
+                ACIndicatorLabel.BackColor = Color.FromArgb(10, 10, 10)
+                If acOff = True Then
+                    ' SetFan()
+                    Delay()
+                    acOff = False
+                End If
+                acOn = True
             End If
 
-            ACIndicatorLabel.Text = "Cooling"
-            'Turns on fan and heater (2+8)
-            ACIndicatorLabel.BackColor = Color.FromArgb(100, 100, 255)
-            'FanIndicatorLabel.BackColor = Color.FromArgb(150, 230, 10)  'no work
-            TXdata(0) = 32                                 'Command byte 1 for digital outputs
-            TXdata(1) = 12                              'Command byte 2 for digital output 1
-            TXdata(2) = 0
-            SendData()
-            acOff = True
+
+
         ElseIf ACIndicatorLabel.Visible = False Then
             ACStatusLabel.Text = "AC Off"
             If acOff = True Then
-                SetFan()
+                ' SetFan()
+                Delay()
                 acOff = False
             End If
             acOn = True
@@ -154,7 +196,7 @@ Public Class HVACControllerForm
 
             PressureStatusLabel.Text = "Pressure Error"
             logFanError = True
-            FileLog()
+            FileLog()  'write error to system file when sense (button not pressed)
         End If
     End Sub
 
@@ -163,6 +205,7 @@ Public Class HVACControllerForm
         If SafetyIndicatorLabel.Visible = True Then
             If safetyLockOn = True Then
                 SafetyIndicatorLabel.BackColor = Color.FromArgb(200, 150, 10)
+                logSafetyLock = True ' for file stuff
                 FileLog()                           'Logs safety lock in system log
                 DisableUnit()                       'Disable all functions until interlock is reset
                 MsgBox("WARNING!!!!!!! Safety Tripped! All systems disabled")
@@ -180,18 +223,24 @@ Public Class HVACControllerForm
         End If
     End Sub
 
+    Sub ActivateSystem()
+        If currentTemp < heatSetTemp + 2 Then  ' Sets heater temperature
+            heating = True
+        ElseIf currentTemp > heatSetTemp - 2 Then
 
+            heating = False
+        End If
 
+        If currentTemp > coldSetTemp + 2 Then
+            cooling = True
+        ElseIf currentTemp < coldSetTemp - 2 Then 'Sets AC temperature
+            cooling = False
+        End If
 
-    'Sub - Pauses program for 5 seconds
-    Sub Delay()
-        ' Threading.Thread.Sleep(5000)
-        TXdata(0) = 32                     'test input  see if read code          
-        TXdata(1) = 255
-        TXdata(2) = 0
-        SendData()
-        Threading.Thread.Sleep(1000)
     End Sub
+
+
+
 
     'Sub - Turns on fan (Digital out 4) adn pauses program for 5 seconds.
     Sub SetFan()
@@ -251,16 +300,51 @@ Public Class HVACControllerForm
         ACIndicatorLabel.Visible = False
         FanIndicatorLabel.Visible = False
         PressureIndicatorLabel.Visible = False
+        heatSetTemp = 50
+        HeatSetTempTextBox.Text = CStr(heatSetTemp) '& Chr(176) & "F"
+        coldSetTemp = 90
+        ColdSetTempTextBox.Text = CStr(coldSetTemp) ' & Chr(176) & "F"
+    End Sub
+
+    Sub DigitalSelect()
+        If readDigIn > 128 Then
+            readDigIn -= 128
+        End If
+
+        If readDigIn > 64 Then
+            readDigIn -= 64
+        End If
+        If readDigIn > 32 Then
+            readDigIn -= 32
+        End If
+        If readDigIn > 16 Then
+            ACIndicatorLabel.Visible = False
+            readDigIn -= 16
+        End If
+        If readDigIn > 8 Then
+            PressureIndicatorLabel.Visible = False
+            readDigIn -= 8
+        End If
+        If readDigIn > 4 Then
+            FanIndicatorLabel.Visible = False
+            readDigIn -= 4
+        End If
+        If readDigIn > 2 Then
+            HeaterIndicatorLabel.Visible = False
+            readDigIn -= 2
+        End If
+
+        If readDigIn > 1 Then
+            SafetyIndicatorLabel.Visible = False
+            readDigIn -= 1
+        End If
+
     End Sub
     '============================================================================
 
     'Timer - Draws input in picture box, communicates with the Qy@ board and processes recieved data
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-        'Dim dataIn As String
-        ' Dim inPut1, inPut2, inPut3, inPut4, inPut5, inPut6, inPut7, inPut8 As Integer
 
-        'Qy@ board, analog input 1 used in place of sensor
-        'Enable input from Qy@ board when check box is checked
 
         'Calls functions to communicate with Qy@ board, analog input 1 when serial communication is present
         If portState = True Then
@@ -275,26 +359,55 @@ Public Class HVACControllerForm
 
             ElseIf txCount = 3 Then
                 DigitalIn()
-
+                'readDigIn = CInt(RXLabel.Text)
+                readDigIn = inPut1 + inPut2 + inPut2 + inPut3 + inPut4 + inPut5 + inPut6 + inPut7 + inPut8
             ElseIf txCount = 4 Then
                 DigitalOut()
                 txCount = 0
             End If
             'Transmit and receive data from Qy@ analog input 1 
 
+
+
             Interlock()
+            ActivateSystem()
             Heater()
             AC()
             FanOnly()
-
+            DigitalSelect() '??????????????
         End If
 
         ReceiveData()
     End Sub
 
+    Private Sub HeTempUpButton_Click(sender As Object, e As EventArgs) Handles HeTempUpButton.Click
 
+        If heatSetTemp < 90 Then
+            heatSetTemp += 0.5
+            HeatSetTempTextBox.Text = CStr(heatSetTemp) '& Chr(176) & "F"
+        End If
+    End Sub
 
+    Private Sub HeTempDownButton_Click(sender As Object, e As EventArgs) Handles HeTempDownButton.Click
+        If heatSetTemp > 50 Then
+            heatSetTemp -= 0.5
+            HeatSetTempTextBox.Text = CStr(heatSetTemp) ' & Chr(176) & "F"
+        End If
+    End Sub
 
+    Private Sub ACTempUpButton_Click(sender As Object, e As EventArgs) Handles ACTempUpButton.Click
+        If coldSetTemp < 90 Then
+            coldSetTemp += 0.5
+            ColdSetTempTextBox.Text = CStr(coldSetTemp) ' & Chr(176) & "F"
+        End If
+    End Sub
+
+    Private Sub ACTempDownButton_Click(sender As Object, e As EventArgs) Handles ACTempDownButton.Click
+        If coldSetTemp > 50 Then
+            coldSetTemp -= 0.5
+            ColdSetTempTextBox.Text = CStr(coldSetTemp) ' & Chr(176) & "F"
+        End If
+    End Sub
 
 
     '======================Sub Routines data to and from Qy@ board===============
@@ -388,7 +501,6 @@ Public Class HVACControllerForm
         newData += 1                                                    'Increment newData once loop is complete
     End Sub
 
-
     'Sub - Establishs communication and displays received data from Qy@ board, analog input1
     Sub AnalogIn()
         If txCount = 1 Then
@@ -398,6 +510,8 @@ Public Class HVACControllerForm
             SendData()                              'Calls function to send serial data
             AnVoltage()                             'Calls function to calcuate input voltage and temperature
             AnIn1Label.Text = vOut & " V"             'Display input voltage
+            CurrentTempLabel.Text = Tempstr & Chr(176) & "F"
+            currentTemp = CInt(Tempstr)
         End If
 
         If txCount = 2 Then
@@ -407,6 +521,8 @@ Public Class HVACControllerForm
             SendData()
             AnVoltage()
             AnIn2Label.Text = vOut                    'Display input voltage
+            SystemTempLabel.Text = Tempstr & Chr(176) & Chr(70)
+            systemTemp = CInt(Tempstr)
         End If
     End Sub
 
@@ -426,11 +542,8 @@ Public Class HVACControllerForm
         vPort = n4 * n3                 'Calculated voltage at input
         vTemp = vPort * 100             'Calculates temperature from calculated voltage in (LM34 Temp = Vin * 100)
         vOut = Format(vPort, "n")       'Calculated voltage at input in normal format (x.xx)
+        Tempstr = Format(vTemp, "n")
     End Sub
-
-
-
-
 
     'Sends command for Digital input and processes received data
     Sub DigitalIn()
@@ -517,7 +630,6 @@ Public Class HVACControllerForm
         End If
     End Sub
 
-
     'NOT Need......testing only
 
     'Sends command To active digital outputs
@@ -573,21 +685,12 @@ Public Class HVACControllerForm
     ' ====================Sub Routines Set up Serial Port=============================
     ' Sub - Sets current date and time
     Sub DateDisplay()
-        Dim timeTemp As String
         Dim dayTemp As Date
-
-        timeTemp = TimeString     'not need?
         dayTemp = DateTime.Now
         TimeLabel.Text = dayTemp.ToShortTimeString
         DayLabel.Text = dayTemp.ToString("dddd")
 
         label15.Text = CStr(Now)
-        'Label16.Text = CStr(TimeOfDay)
-        'Label17.Text = dayTemp.ToShortDateString
-        ' Label18.Text = DateTime.Now.ToLongDateString
-        'Label19.Text = DateString
-        ' Label1.Text = DateTime.Now.ToString("hh:mm:ss:tt")
-        'Label2.Text = DateTime.Now.ToString("hh:mm:tt")
     End Sub
 
     'Sub - Sets com port and baud rate 
@@ -613,6 +716,8 @@ Public Class HVACControllerForm
 
         Input(1, port)                                              'Load port name
         Input(1, baud)                                              'Load baud rate
+        'Input(1, heatSetTemp)                                       'Load low temperature set point
+        'Input(1, coldSetTemp)                                       'Load low temperature set point
         FileClose(1)                                                'Closes file
 
         ComPortLabel.Text = port                                    'Displays com port and baud rate
@@ -630,8 +735,11 @@ Public Class HVACControllerForm
         End Try
 
         WriteLine(1, SerialPortComboBox.SelectedItem, BaudRateComboBox.SelectedItem) 'Write file
+        'WriteLine(1, Val(HeatSetTempTextBox.Text), Val(ColdSetTempTextBox.Text))
         FileClose(1)
     End Sub
+
+
 
     'Sub - Set baud rate of com port
     Sub BaudRate()
