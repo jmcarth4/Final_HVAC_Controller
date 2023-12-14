@@ -33,6 +33,7 @@ Partial Class HVACControllerForm
         Me.SaveSettingsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ThermostatGroupBox = New System.Windows.Forms.GroupBox()
+        Me.SafetyIndicatorLabel = New System.Windows.Forms.Label()
         Me.HeatSetTempTextBox = New System.Windows.Forms.TextBox()
         Me.ColdSetTempTextBox = New System.Windows.Forms.TextBox()
         Me.TempDownButton = New System.Windows.Forms.Button()
@@ -88,14 +89,17 @@ Partial Class HVACControllerForm
         Me.Timer2 = New System.Windows.Forms.Timer(Me.components)
         Me.label15 = New System.Windows.Forms.Label()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.LoadButton = New System.Windows.Forms.Button()
-        Me.ConnectButton = New System.Windows.Forms.Button()
+        Me.Test1Button = New System.Windows.Forms.Button()
+        Me.Test2Button = New System.Windows.Forms.Button()
+        Me.Test3Button = New System.Windows.Forms.Button()
         Me.ExitButton = New System.Windows.Forms.Button()
         Me.label1 = New System.Windows.Forms.Label()
-        Me.Test3Button = New System.Windows.Forms.Button()
-        Me.Test2Button = New System.Windows.Forms.Button()
-        Me.Test1Button = New System.Windows.Forms.Button()
-        Me.SafetyIndicatorLabel = New System.Windows.Forms.Label()
+        Me.LoadButton = New System.Windows.Forms.Button()
+        Me.ConnectButton = New System.Windows.Forms.Button()
+        Me.ConnectLabel = New System.Windows.Forms.Label()
+        Me.LoadLabel = New System.Windows.Forms.Label()
+        Me.Load2Label = New System.Windows.Forms.Label()
+        Me.Load1Label = New System.Windows.Forms.Label()
         Me.SerialSettingsMenuStrip.SuspendLayout()
         Me.ThermostatGroupBox.SuspendLayout()
         Me.TestGroupBox.SuspendLayout()
@@ -168,6 +172,8 @@ Partial Class HVACControllerForm
         '
         'ThermostatGroupBox
         '
+        Me.ThermostatGroupBox.Controls.Add(Me.LoadLabel)
+        Me.ThermostatGroupBox.Controls.Add(Me.ConnectLabel)
         Me.ThermostatGroupBox.Controls.Add(Me.SafetyIndicatorLabel)
         Me.ThermostatGroupBox.Controls.Add(Me.HeatSetTempTextBox)
         Me.ThermostatGroupBox.Controls.Add(Me.ColdSetTempTextBox)
@@ -193,6 +199,15 @@ Partial Class HVACControllerForm
         Me.ThermostatGroupBox.TabIndex = 2
         Me.ThermostatGroupBox.TabStop = False
         Me.ThermostatGroupBox.Text = "Thermostat GroupBox"
+        '
+        'SafetyIndicatorLabel
+        '
+        Me.SafetyIndicatorLabel.AutoSize = True
+        Me.SafetyIndicatorLabel.Location = New System.Drawing.Point(429, 218)
+        Me.SafetyIndicatorLabel.Name = "SafetyIndicatorLabel"
+        Me.SafetyIndicatorLabel.Size = New System.Drawing.Size(121, 20)
+        Me.SafetyIndicatorLabel.TabIndex = 22
+        Me.SafetyIndicatorLabel.Text = "Saftey Indicator"
         '
         'HeatSetTempTextBox
         '
@@ -707,23 +722,32 @@ Partial Class HVACControllerForm
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "GroupBox1"
         '
-        'LoadButton
+        'Test1Button
         '
-        Me.LoadButton.Location = New System.Drawing.Point(896, 74)
-        Me.LoadButton.Name = "LoadButton"
-        Me.LoadButton.Size = New System.Drawing.Size(151, 30)
-        Me.LoadButton.TabIndex = 22
-        Me.LoadButton.Text = "Load"
-        Me.LoadButton.UseVisualStyleBackColor = True
+        Me.Test1Button.Location = New System.Drawing.Point(17, 143)
+        Me.Test1Button.Name = "Test1Button"
+        Me.Test1Button.Size = New System.Drawing.Size(151, 30)
+        Me.Test1Button.TabIndex = 40
+        Me.Test1Button.Text = "Test Button 1"
+        Me.Test1Button.UseVisualStyleBackColor = True
         '
-        'ConnectButton
+        'Test2Button
         '
-        Me.ConnectButton.Location = New System.Drawing.Point(896, 124)
-        Me.ConnectButton.Name = "ConnectButton"
-        Me.ConnectButton.Size = New System.Drawing.Size(151, 30)
-        Me.ConnectButton.TabIndex = 36
-        Me.ConnectButton.Text = "Connect"
-        Me.ConnectButton.UseVisualStyleBackColor = True
+        Me.Test2Button.Location = New System.Drawing.Point(17, 98)
+        Me.Test2Button.Name = "Test2Button"
+        Me.Test2Button.Size = New System.Drawing.Size(151, 30)
+        Me.Test2Button.TabIndex = 39
+        Me.Test2Button.Text = "Test Button 2"
+        Me.Test2Button.UseVisualStyleBackColor = True
+        '
+        'Test3Button
+        '
+        Me.Test3Button.Location = New System.Drawing.Point(17, 51)
+        Me.Test3Button.Name = "Test3Button"
+        Me.Test3Button.Size = New System.Drawing.Size(151, 30)
+        Me.Test3Button.TabIndex = 38
+        Me.Test3Button.Text = " Delay "
+        Me.Test3Button.UseVisualStyleBackColor = True
         '
         'ExitButton
         '
@@ -742,47 +766,67 @@ Partial Class HVACControllerForm
         Me.label1.Size = New System.Drawing.Size(0, 20)
         Me.label1.TabIndex = 25
         '
-        'Test3Button
+        'LoadButton
         '
-        Me.Test3Button.Location = New System.Drawing.Point(17, 51)
-        Me.Test3Button.Name = "Test3Button"
-        Me.Test3Button.Size = New System.Drawing.Size(151, 30)
-        Me.Test3Button.TabIndex = 38
-        Me.Test3Button.Text = " Delay 5 sec"
-        Me.Test3Button.UseVisualStyleBackColor = True
+        Me.LoadButton.Location = New System.Drawing.Point(896, 74)
+        Me.LoadButton.Name = "LoadButton"
+        Me.LoadButton.Size = New System.Drawing.Size(151, 30)
+        Me.LoadButton.TabIndex = 22
+        Me.LoadButton.Text = "Load"
+        Me.LoadButton.UseVisualStyleBackColor = True
         '
-        'Test2Button
+        'ConnectButton
         '
-        Me.Test2Button.Location = New System.Drawing.Point(17, 98)
-        Me.Test2Button.Name = "Test2Button"
-        Me.Test2Button.Size = New System.Drawing.Size(151, 30)
-        Me.Test2Button.TabIndex = 39
-        Me.Test2Button.Text = "Test Button 2"
-        Me.Test2Button.UseVisualStyleBackColor = True
+        Me.ConnectButton.Location = New System.Drawing.Point(896, 124)
+        Me.ConnectButton.Name = "ConnectButton"
+        Me.ConnectButton.Size = New System.Drawing.Size(151, 30)
+        Me.ConnectButton.TabIndex = 36
+        Me.ConnectButton.Text = "Connect"
+        Me.ConnectButton.UseVisualStyleBackColor = True
         '
-        'Test1Button
+        'ConnectLabel
         '
-        Me.Test1Button.Location = New System.Drawing.Point(17, 143)
-        Me.Test1Button.Name = "Test1Button"
-        Me.Test1Button.Size = New System.Drawing.Size(151, 30)
-        Me.Test1Button.TabIndex = 40
-        Me.Test1Button.Text = "Test Button 1"
-        Me.Test1Button.UseVisualStyleBackColor = True
+        Me.ConnectLabel.AutoSize = True
+        Me.ConnectLabel.Location = New System.Drawing.Point(687, 20)
+        Me.ConnectLabel.Name = "ConnectLabel"
+        Me.ConnectLabel.Size = New System.Drawing.Size(141, 20)
+        Me.ConnectLabel.TabIndex = 41
+        Me.ConnectLabel.Text = "Connection Status"
         '
-        'SafetyIndicatorLabel
+        'LoadLabel
         '
-        Me.SafetyIndicatorLabel.AutoSize = True
-        Me.SafetyIndicatorLabel.Location = New System.Drawing.Point(429, 218)
-        Me.SafetyIndicatorLabel.Name = "SafetyIndicatorLabel"
-        Me.SafetyIndicatorLabel.Size = New System.Drawing.Size(121, 20)
-        Me.SafetyIndicatorLabel.TabIndex = 22
-        Me.SafetyIndicatorLabel.Text = "Saftey Indicator"
+        Me.LoadLabel.AutoSize = True
+        Me.LoadLabel.Location = New System.Drawing.Point(540, 20)
+        Me.LoadLabel.Name = "LoadLabel"
+        Me.LoadLabel.Size = New System.Drawing.Size(96, 20)
+        Me.LoadLabel.TabIndex = 42
+        Me.LoadLabel.Text = "Load Status"
+        '
+        'Load2Label
+        '
+        Me.Load2Label.AutoSize = True
+        Me.Load2Label.Location = New System.Drawing.Point(552, 36)
+        Me.Load2Label.Name = "Load2Label"
+        Me.Load2Label.Size = New System.Drawing.Size(82, 20)
+        Me.Load2Label.TabIndex = 57
+        Me.Load2Label.Text = "Serial Port"
+        '
+        'Load1Label
+        '
+        Me.Load1Label.AutoSize = True
+        Me.Load1Label.Location = New System.Drawing.Point(646, 36)
+        Me.Load1Label.Name = "Load1Label"
+        Me.Load1Label.Size = New System.Drawing.Size(86, 20)
+        Me.Load1Label.TabIndex = 57
+        Me.Load1Label.Text = "Baud Rate"
         '
         'HVACControllerForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1074, 618)
+        Me.Controls.Add(Me.Load1Label)
+        Me.Controls.Add(Me.Load2Label)
         Me.Controls.Add(Me.ConnectButton)
         Me.Controls.Add(Me.LoadButton)
         Me.Controls.Add(Me.GroupBox1)
@@ -879,4 +923,8 @@ Partial Class HVACControllerForm
     Friend WithEvents Test2Button As Button
     Friend WithEvents Test3Button As Button
     Friend WithEvents SafetyIndicatorLabel As Label
+    Friend WithEvents ConnectLabel As Label
+    Friend WithEvents LoadLabel As Label
+    Friend WithEvents Load2Label As Label
+    Friend WithEvents Load1Label As Label
 End Class

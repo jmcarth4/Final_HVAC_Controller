@@ -48,40 +48,11 @@ Public Class HVACControllerForm
 
     End Sub
 
-    '==============================================================================
-    'TODO - 1)stop all functions
-    'TODO - 2)disable all functions til system is reset
-    'TODO - 3)Error message display once
-    'Sub - 
-    Sub Interlock()
-        If SafetyIndicatorLabel.Visible = True Then
-            If lockOn = True Then
-                'Error file sub
-                'message box
-                'MsgBox("WARNING!!!!!!! Safety Tripped! All systems disabled")
-                'shut down sub
-                ' lockOff = True  for file stuff
-                TXdata(0) = 32                     'test input  see if read code          
-                TXdata(1) = 255
-                TXdata(2) = 0
-                SendData()
-                Delay()                             'testing test
-
-                lockOn = False
-            End If
-            SafetyIndicatorLabel.BackColor = Color.FromArgb(200, 150, 10)
-            'MsgBox("WARNING!!!!!!! Safety Tripped! All systems disabled")
-            TXdata(0) = 32                                 'Command byte 1 for digital outputs
-            TXdata(1) = 1                              'Command byte 2 for digital output 1
-            TXdata(2) = 0
-            SendData()
-            'Stop all functions
-            'Disable all functions until interlock is reset
-        ElseIf SafetyIndicatorLabel.Visible = False Then
-            lockOn = True
-        End If
+    Private Sub Test1Button_Click(sender As Object, e As EventArgs) Handles Test1Button.Click
 
     End Sub
+
+    '==============================================================================
 
 
     'TODO 1) file / error report???
@@ -177,9 +148,48 @@ Public Class HVACControllerForm
         End If
     End Sub
 
+
+    'TODO - 1)stop all functions
+    'TODO - 2)disable all functions til system is reset
+    'TODO - 3)Error message display once
+    'Sub - 
+    Sub Interlock()
+        If SafetyIndicatorLabel.Visible = True Then
+            If lockOn = True Then
+                'Error file sub
+                'message box
+                'MsgBox("WARNING!!!!!!! Safety Tripped! All systems disabled")
+                'shut down sub
+                ' lockOff = True  for file stuff
+
+                Delay()                             'testing test
+
+                lockOn = False
+            End If
+            SafetyIndicatorLabel.BackColor = Color.FromArgb(200, 150, 10)
+            'MsgBox("WARNING!!!!!!! Safety Tripped! All systems disabled")
+            TXdata(0) = 32                                 'Command byte 1 for digital outputs
+            TXdata(1) = 1                              'Command byte 2 for digital output 1
+            TXdata(2) = 0
+            SendData()
+            'Stop all functions
+            'Disable all functions until interlock is reset
+        ElseIf SafetyIndicatorLabel.Visible = False Then
+            lockOn = True
+        End If
+
+    End Sub
+
+
+
+
     'Sub - Pauses program for 5 seconds
     Sub Delay()
         ' Threading.Thread.Sleep(5000)
+        TXdata(0) = 32                     'test input  see if read code          
+        TXdata(1) = 255
+        TXdata(2) = 0
+        SendData()
         Threading.Thread.Sleep(1000)
     End Sub
 
@@ -195,6 +205,14 @@ Public Class HVACControllerForm
 
 
     Sub FunctionLoad()
+        LoadLabel.Text = " "
+        LoadLabel.BackColor = Color.FromArgb(150, 0, 0)
+        Load1Label.Text = " "
+        Load2Label.Text = " "
+        Load1Label.BackColor = Color.FromArgb(150, 0, 0)
+        Load2Label.BackColor = Color.FromArgb(150, 0, 0)
+        ConnectLabel.Text = " "
+        ConnectLabel.BackColor = Color.FromArgb(150, 0, 0)
         SafetyIndicatorLabel.Visible = False
         HeaterIndicatorLabel.Visible = False
         ACIndicatorLabel.Visible = False
@@ -466,6 +484,9 @@ Public Class HVACControllerForm
         End If
     End Sub
 
+
+    'NOT Need......testing only
+
     'Sends command To active digital outputs
     'Priorty display - highest checked box is output displayed
     Sub DigitalOut()
@@ -563,6 +584,8 @@ Public Class HVACControllerForm
 
         ComPortLabel.Text = port                                    'Displays com port and baud rate
         BaudRateLabel.Text = baud
+        Load2Label.BackColor = Color.FromArgb(0, 150, 0)
+        Load1Label.BackColor = Color.FromArgb(0, 150, 0)
     End Sub
 
     'Sub - Saves set com port and baud rate to file
@@ -603,6 +626,8 @@ Public Class HVACControllerForm
         SerialPort1.Parity = IO.Ports.Parity.None      'no Parity
         ' SerialPort1.PortName = 
     End Sub
+
+
 
     'Sub - 
     Sub OpenPort()
@@ -652,7 +677,8 @@ Public Class HVACControllerForm
         Catch ex As Exception
 
         End Try
-
+        LoadLabel.Text = " "
+        LoadLabel.BackColor = Color.FromArgb(0, 150, 0)
         ConnectButton.Text = "Connect"
         portState = False
 
@@ -665,10 +691,14 @@ Public Class HVACControllerForm
             Try
                 SerialPort1.Open()
                 ConnectButton.Text = "Disconnect"        'Displays that com port is connected
+                ConnectLabel.Text = "Power"
+                ConnectLabel.BackColor = Color.FromArgb(0, 150, 0)
                 portState = True                                    'To disconnect press button again
             Catch ex As Exception
                 MsgBox("Port Already Open or Port Unavailable")     'Com port is disconnected. Press button to connect.
                 ConnectButton.Text = "Connect"
+                ConnectLabel.Text = "No Power"
+                ConnectLabel.BackColor = Color.FromArgb(150, 0, 0)
                 portState = False
             End Try
         Else                                                        'Com port is disconnected. Press button to connect.
